@@ -1,0 +1,7 @@
+[user]
+	name = hbin
+	email = hbin000dev@gmail.com
+[color]
+	ui = true
+[core]
+	editor = vim
