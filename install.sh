@@ -1,7 +1,5 @@
 #!/bin/bash
 # Inspired by janus' bootstrap.bash
-# TODO use rake
-#      install font
 
 DOTFILE_DIR=$HOME/.dotfiles
 OLD_DOTFILE_DIR=$HOME/.dotfiles.old
@@ -12,18 +10,32 @@ function die () {
     exit 1
 }
 
-# Install the janus for vim
+# Install Top Programming Fonts
+curl -L https://github.com/hbin/top-programming-fonts/raw/master/install.sh | bash
+
+# Install Janus for vim
 curl -L https://github.com/carlhuda/janus/raw/master/bootstrap.sh | bash
 
-# Install the oh-my-zsh
+# Install oh-my-zsh
 curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | bash
 
-# Make backup dotfiles dir
-mkdir $OLD_DOTFILE_DIR || die "Could not mkdir $OLD_DOTFILE_DIR"
+# Remove legacy $OLD_DOTFILE_DIR
+if [[ -e $OLD_DOTFILE_DIR ]]; then
+  rm -rf $OLD_DOTFILE_DIR || die "Could not remove $OLD_DOTFILE_DIR"
+  echo "$OLD_DOTFILE_DIR has been removed!"
+fi
+
+# Rename $DOTFILE_DIR to $OLD_DOTFILE_DIR OR make a new $OLD_DOTFILE_DIR
+if [[ -e $DOTFILE_DIR ]]; then
+  mv $DOTFILE_DIR $OLD_DOTFILE_DIR || die "Could not move $DOTFILE_DIR to $OLD_DOTFILE_DIR"
+  echo "$DOTFILE_DIR has been rename to $OLD_DOTFILE_DIR"
+else
+  mkdir $OLD_DOTFILE_DIR || die "Could not mkdir $OLD_DOTFILE_DIR"
+fi
 
 # Clone dotfiles to ~/.dotfiles
-git clone https://github.com/hbin/dotfiles.git $HOME/.dotfiles \
-  || die "Cound not clone the repository to ${HOME}/.dotfiles"
+git clone https://github.com/hbin/dotfiles.git $DOTFILE_DIR \
+  || die "Cound not clone the repository to $DOTFILE_DIR"
 
 # TODO: use rake!
 # Backup and make symbolink
@@ -38,7 +50,7 @@ for i in ${pwd}*; do
             mv $hdot $odot || die "Could not move $hdot to $odot"
             echo "backup $hdot"
         fi
-        
+
         ln -fs $ndot $hdot || die "Could not symblink $ndot to $hdot"
         echo "symbolink $ndot"
     fi

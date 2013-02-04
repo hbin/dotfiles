@@ -8,6 +8,10 @@ This is a collection of dotfiles.
 
 ## What It Does?
 
+### Install Top-Programming-Fonts
+
+It's my favorite programming fonts.
+
 ### Install Janus
 
 It's a distribution of plug-ins and mappings for Vim, Gvim and
@@ -28,3 +32,4 @@ configuration.
 ## TODO
 1. Prefer Rake
 2. Installation for hbin's emacs.
+3. Interactive Installation
