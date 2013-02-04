@@ -1,0 +1,98 @@
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Creator: hbin - embrace.hbin@gmail.com
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
+set shortmess=atI
+
+" No beep
+set noerrorbells
+set novisualbell
+
+" GUI
+set go=
+set number
+set scrolloff=3
+set laststatus=2
+set lazyredraw
+
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Monaco\ 12
+  elseif has("gui_win32")
+    set guifont=Monaco:h12:cANSI
+  endif
+endif
+
+" Syntax highlight
+syntax enable
+
+" Formats & encoding
+set encoding=utf-8
+set fileencodings=utf-8
+set fileformats=unix,dos,mac
+
+" No temp files
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Edit
+set autoread
+set backspace=start,indent,eol
+set bsdir=buffer
+set history=1024
+set hidden
+set list
+set listchars=tab:,.,trail:.,extends:#,nbsp:.
+
+" Tab
+set expandtab
+set smarttab
+set tabstop=4
+set shiftwidth=2
+
+" Indentaion
+set autoindent
+set copyindent
+
+" Word wrap
+set nowrap
+set iskeyword+=_,$,@,%,#,-
+
+" Indentation
+filetype plugin indent on
+
+" Search
+set ignorecase
+set incsearch
+set hlsearch
+
+" Parenthensis
+set showmatch
+set matchtime=0
+
+" Tab completion
+set wildmenu
+set wildmode=list:full
+
+" Other
+set viminfo=
+set clipboard=unnamed
+
+
+""""""""""""""""""""""""""""""
+" =>>> Keys
+""""""""""""""""""""""""""""""
+let mapleader = ","
+
+
+""""""""""""""""""""""""""""""
+" =>>> Setting for Plugins
+""""""""""""""""""""""""""""""
+
+" Ctags
+set tags=tags
+set tags+=../tags
+set autochdir
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>

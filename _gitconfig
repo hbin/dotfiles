@@ -1,0 +1,7 @@
+[user]
+	name = hbin
+	email = embrace.hbin@gmail.com
+[color]
+	ui = true
+[core]
+	editor = vim
