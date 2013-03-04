@@ -12,13 +12,13 @@ ZSH_THEME="robbyrussell"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias bt="ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS ."
+alias bet='ctags -e -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclude=tmp --exclude=.git --exclude=public . $(rvm gemdir)/gems'
+alias bvt='ctags -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclude=tmp --exclude=.git --exclude=public .'
 
 # Emacs
 export ALTERNATE_EDITOR=""
-alias e="emacsclient -c"
+alias e="emacsclient -c -a '' -F '((fullscreen . maximized))' &"
 alias t="emacsclient -t"
-alias d="emacs --daemon"
 alias ec="emacsclient -e '(kill-emacs)'"
 
 # Set to this to use case-sensitive completion
