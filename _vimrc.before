@@ -18,9 +18,9 @@ set lazyredraw
 
 if has("gui_running")
   if has("gui_gtk2")
-    set guifont=Monaco\ 12
+    set guifont=Monaco\ 14
   elseif has("gui_win32")
-    set guifont=Monaco:h12:cANSI
+    set guifont=Monaco:h14:cANSI
   endif
 endif
 
@@ -86,6 +86,9 @@ set clipboard=unnamed
 """"""""""""""""""""""""""""""
 let mapleader = ","
 
+imap jj <ESC>
+imap <C-b> <ESC>i
+imap <C-f> <ESC>la
 
 """"""""""""""""""""""""""""""
 " =>>> Setting for Plugins
