@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# hbin's .xinitrc file
+
+#
+# {{{ Display settings
+#
+# Force LVDS as the primary screen
+xrandr --output LVDS1 --primary
+
+# Force VGA1 resolution
+xrandr --output VGA1 --mode 1920x1080
+#
+# }}}
+#
+
+#
+# {{{ Resource and keymap settings
+#
+usermodmap="${HOME}/.Xmodmap"
+userresources="${HOME}/.Xresources"
+sysmodmap="/etc/X11/xinit/.Xmodmap"
+sysresources="/etc/X11/xinit/.Xresources"
+
+# Merge system and user resources and keymaps
+[[ -r "${sysresources}" ]]  && xrdb -merge "${sysresources}"
+[[ -r "${sysmodmap}" ]]     && xmodmap "${sysmodmap}"
+[[ -r "${userresources}" ]] && xrdb -merge "${userresources}"
+[[ -r "${usermodmap}" ]]    && xmodmap "${usermodmap}"
+#
+# }}}
+#
+
+#
+# {{{ Input settings
+#
+# Keyboard control, repeat delay and repeat rate
+xset r rate 335 25
+
+# Disable the touchpad while typing
+syndaemon -k -i 2 -d &
+#
+# }}}
+#
+
+#
+# Start the GNU Emacs Deamon
+#
+emacs --daemon &
