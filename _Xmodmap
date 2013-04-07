@@ -1,0 +1,8 @@
+!
+! Make Caps_Lock an additional Control key
+! (This is *DIFFERENT* than *swapping* Caps_Lock and Control, as described
+! in the xmodmap(1) man page.)
+!
+keycode 66 = Control_L Control_L Control_L Control_L Control_L Control_L Control_L Control_L
+clear lock
+add Control = Control_L
