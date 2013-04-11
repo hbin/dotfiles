@@ -1,10 +1,25 @@
-
+# dump SQL into console
 require 'logger'
-
-# Rails.logger
-if ENV.include?('RAILS_ENV') &&
-  !Object.const_defined?('RAILS_DEFAULT_LOGGER')
+if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER') # rails 2
   Object.const_set('RAILS_DEFAULT_LOGGER', Logger.new(STDOUT))
-elsif defined?(ActiveRecord)
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
+else # rails 3
+  ActiveRecord::Base.logger = Logger.new(STDOUT) if defined? Rails::Console
 end
+
+# https://github.com/carlhuda/bundler/issues/183#issuecomment-1149953
+if defined?(::Bundler)
+  global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
+  if global_gemset
+    all_global_gem_paths = Dir.glob("#{global_gemset}/gems/*")
+    all_global_gem_paths.each do |p|
+      gem_path = "#{p}/lib"
+      $LOAD_PATH << gem_path
+    end
+  end
+end
+
+# Use Pry everywhere
+require "rubygems"
+require 'pry'
+Pry.start
+exit
