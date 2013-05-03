@@ -17,7 +17,7 @@ alias bvt='ctags -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclu
 
 # Emacs
 export ALTERNATE_EDITOR=""
-alias e="emacsclient -c -a '' -F '((fullscreen . maximized))' &"
+alias e="emacsclient -c"
 alias t="emacsclient -t"
 alias ec="emacsclient -e '(kill-emacs)'"
 
