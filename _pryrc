@@ -1,31 +1,37 @@
-# Load plugins (only those I whitelist)
-Pry.config.should_load_plugins = false
-# Pry.plugins["doc"].activate!
+#!/usr/bin/ruby
 
-# Launch Pry with access to the entire Rails stack.
-# If you have Pry in your Gemfile, you can pass: ./script/console --irb=pry instead.
-# If you don't, you can load it through the lines below :)
-rails = File.join Dir.getwd, 'config', 'environment.rb'
+# === EDITOR ===
+Pry.editor = 'vi'
 
-if File.exist?(rails) && ENV['SKIP_RAILS'].nil?
-  require rails
+# == Pry-Nav - Using pry as a debugger ==
+Pry.commands.alias_command 'c', 'continue' rescue nil
+Pry.commands.alias_command 's', 'step' rescue nil
+Pry.commands.alias_command 'n', 'next' rescue nil
 
-  if Rails.version[0..0] == "2"
-    require 'console_app'
-    require 'console_with_helpers'
-  elsif Rails.version[0..0] == "3"
-    require 'rails/console/app'
-    require 'rails/console/helpers'
+# === History ===
+Pry.config.history.file = File.expand_path('~/.history/ruby')
 
-    # Prompt with ruby version
-    Pry.prompt = [proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " },
-                  proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }]
-
-    # A minor fix needed on Rails 3.2+
-    if defined?(Rails) && Rails.env
-      extend Rails::ConsoleMethods
-    end
-  else
-    warn "[WARN] cannot load Rails console commands (Not on Rails2 or Rails3?)"
-  end
+# === CUSTOM PROMPT ===
+# This prompt shows the ruby version (useful for RVM)
+prompt_proc = lambda do |obj, nest_level, _|
+  ruby_info = ""
+  ruby_info << "#{Rails.version}@" if defined?(Rails)
+  ruby_info << RUBY_VERSION
+  ruby_info = "\e[32m#{ruby_info}\e[0m"
+  nest_info = "#{nest_level}"
+  obj_info  = "\e[33m#{obj}\e[0m"
+  "[#{ruby_info}] #{nest_info}:(#{obj_info}) > "
 end
+
+Pry.prompt = [prompt_proc, prompt_proc]
+
+# === Listing config ===
+# Better colors - by default the headings for methods are too
+# similar to method name colors leading to a "soup"
+# These colors are optimized for use with Solarized scheme
+# for your terminal
+Pry.config.ls.separator = "\n" # new lines between methods
+Pry.config.ls.heading_color = :magenta
+Pry.config.ls.public_method_color = :green
+Pry.config.ls.protected_method_color = :yellow
+Pry.config.ls.private_method_color = :bright_black
