@@ -1,7 +1,0 @@
-#!/bin/sh
-
-#
-# ~/.xprofile
-#
-
-/bin/bash --login -i ~/.xinitrc
