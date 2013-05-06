@@ -1,25 +1,22 @@
-# dump SQL into console
-require 'logger'
-if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER') # rails 2
-  Object.const_set('RAILS_DEFAULT_LOGGER', Logger.new(STDOUT))
-else # rails 3
-  ActiveRecord::Base.logger = Logger.new(STDOUT) if defined? Rails::Console
-end
+#!/usr/bin/ruby
 
-# https://github.com/carlhuda/bundler/issues/183#issuecomment-1149953
-if defined?(::Bundler)
-  global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
-  if global_gemset
-    all_global_gem_paths = Dir.glob("#{global_gemset}/gems/*")
-    all_global_gem_paths.each do |p|
-      gem_path = "#{p}/lib"
-      $LOAD_PATH << gem_path
-    end
+require 'irb/completion'
+require 'irb/ext/save-history'
+require 'rubygems'
+
+IRB.conf[:SAVE_HISTORY] = 1000
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.history/ruby"
+
+IRB.conf[:PROMPT_MODE] = :SIMPLE
+
+IRB.conf[:AUTO_INDENT] = true
+
+# === Load railsrc ===
+railsrc_path = File.expand_path('~/.railsrc')
+if ( ENV['RAILS_ENV'] || defined? Rails ) && File.exist?( railsrc_path )
+  begin
+    load railsrc_path
+  rescue Exception
+    warn "Could not load: #{ railsrc_path }" # because of $!.message
   end
 end
-
-# Use Pry everywhere
-require "rubygems"
-require 'pry'
-Pry.start
-exit
