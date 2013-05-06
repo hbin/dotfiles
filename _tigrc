@@ -1,0 +1,6 @@
+set show-rev-graph = yes
+set show-refs = yes
+set show-line-numbers = yes
+set line-number-interval = 1
+set tab-size = 2
+set commit-encoding = "UTF-8"
