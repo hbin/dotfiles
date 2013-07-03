@@ -10,27 +10,16 @@ function die () {
     exit 1
 }
 
-# Install Top Programming Fonts
-curl -L https://github.com/hbin/top-programming-fonts/raw/master/install.sh | bash
-
-# Install Janus for vim
-curl -L https://github.com/carlhuda/janus/raw/master/bootstrap.sh | bash
-
-# Install oh-my-zsh
-curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | bash
-
 # Remove legacy $OLD_DOTFILE_DIR
 if [[ -e $OLD_DOTFILE_DIR ]]; then
   rm -rf $OLD_DOTFILE_DIR || die "Could not remove $OLD_DOTFILE_DIR"
   echo "$OLD_DOTFILE_DIR has been removed!"
 fi
 
-# Rename $DOTFILE_DIR to $OLD_DOTFILE_DIR OR make a new $OLD_DOTFILE_DIR
+# Rename $DOTFILE_DIR to $OLD_DOTFILE_DIR
 if [[ -e $DOTFILE_DIR ]]; then
   mv $DOTFILE_DIR $OLD_DOTFILE_DIR || die "Could not move $DOTFILE_DIR to $OLD_DOTFILE_DIR"
   echo "$DOTFILE_DIR has been rename to $OLD_DOTFILE_DIR"
-else
-  mkdir $OLD_DOTFILE_DIR || die "Could not mkdir $OLD_DOTFILE_DIR"
 fi
 
 # Clone dotfiles to ~/.dotfiles
