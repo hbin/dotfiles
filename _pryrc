@@ -3,10 +3,13 @@
 # === EDITOR ===
 Pry.editor = 'vi'
 
-# == Pry-Nav - Using pry as a debugger ==
-Pry.commands.alias_command 'c', 'continue' rescue nil
-Pry.commands.alias_command 's', 'step' rescue nil
-Pry.commands.alias_command 'n', 'next' rescue nil
+# == Pry-Debugger - Using pry as a debugger ==
+if defined?(PryDebugger)
+  Pry.commands.alias_command 'c', 'continue'
+  Pry.commands.alias_command 's', 'step'
+  Pry.commands.alias_command 'n', 'next'
+  Pry.commands.alias_command 'f', 'finish'
+end
 
 # === History ===
 Pry.config.history.file = File.expand_path('~/.history/ruby')

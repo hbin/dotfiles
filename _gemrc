@@ -3,9 +3,7 @@
 gem: --no-ri --no-rdoc
 :update_sources: true
 :sources:
-- http://ruby.taobao.org
-- http://rubygems.org/
-- http://gems.github.com
+- http://ruby.taobao.org/
 :backtrace: false
 :bulk_threshold: 1000
 :benchmark: false
