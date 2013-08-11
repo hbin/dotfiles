@@ -80,7 +80,6 @@ set wildmode=list:full
 set viminfo=
 set clipboard=unnamed
 
-
 """"""""""""""""""""""""""""""
 " =>>> Keys
 """"""""""""""""""""""""""""""
@@ -93,6 +92,10 @@ imap <C-f> <ESC>la
 """"""""""""""""""""""""""""""
 " =>>> Setting for Plugins
 """"""""""""""""""""""""""""""
+
+" CtrlP
+let g:ctrlp_max_height=500
+
 
 " Ctags
 set tags=tags
