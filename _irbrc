@@ -11,7 +11,7 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 
 IRB.conf[:AUTO_INDENT] = true
 
-IRB.conf[:IRB_RC] = Proc.new do
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-  ActiveRecord::Base.clear_active_connections!
-end
+# IRB.conf[:IRB_RC] = Proc.new do
+#   ActiveRecord::Base.logger = Logger.new(STDOUT)
+#   ActiveRecord::Base.clear_active_connections!
+# end
