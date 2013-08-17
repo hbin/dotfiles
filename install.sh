@@ -35,11 +35,6 @@ for i in ${pwd}*; do
         ndot=${DOTFILE_DIR}/_${i:1}
         odot=${OLD_DOTFILE_DIR}/_${i:1}
 
-        if [[ (-e $hdot) || (-h $hdot) ]]; then
-            mv $hdot $odot || die "Could not move $hdot to $odot"
-            echo "backup $hdot"
-        fi
-
         ln -fs $ndot $hdot || die "Could not symblink $ndot to $hdot"
         echo "symbolink $ndot"
     fi
