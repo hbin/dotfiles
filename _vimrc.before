@@ -21,6 +21,8 @@ if has("gui_running")
     set guifont=Monaco\ 14
   elseif has("gui_win32")
     set guifont=Monaco:h14:cANSI
+  else
+    set guifont=Monaco:h16
   endif
 endif
 
