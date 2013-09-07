@@ -26,3 +26,5 @@
 
 [merge]
   tool = vimdiff
+[credential]
+	helper = osxkeychain
