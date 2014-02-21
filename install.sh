@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Inspired by janus' bootstrap.bash
 
 DOTFILE_DIR=$HOME/.dotfiles
@@ -27,13 +27,12 @@ git clone https://github.com/hbin/dotfiles.git $DOTFILE_DIR \
   || die "Cound not clone the repository to $DOTFILE_DIR"
 
 # TODO: use rake!
-# Backup and make symbolink
+# make symbolink
 cd $DOTFILE_DIR || die "Could not go into the $DOTFILE_DIR"
 for i in ${pwd}*; do
     if [[ $i =~ ^_ ]]; then
         hdot=${HOME}/.${i:1}
         ndot=${DOTFILE_DIR}/_${i:1}
-        odot=${OLD_DOTFILE_DIR}/_${i:1}
 
         ln -fs $ndot $hdot || die "Could not symblink $ndot to $hdot"
         echo "symbolink $ndot"
