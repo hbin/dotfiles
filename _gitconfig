@@ -16,7 +16,7 @@
 [core]
   pager = less -FRSX
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore_global
 
 [diff]
   tool = vimdiff
@@ -28,3 +28,5 @@
   tool = vimdiff
 [credential]
 	helper = osxkeychain
+[push]
+	default = simple
