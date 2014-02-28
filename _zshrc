@@ -1,9 +1,11 @@
+# ~/.zshrc: executed by zsh for non-login shells.
+
 # rbenv
 export RBENV_ROOT="${HOME}/.rbenv"
 
 if [ -d "${RBENV_ROOT}" ]; then
-  export PATH="${RBENV_ROOT}/bin:${PATH}"
-  eval "$(rbenv init -)"
+    export PATH="${RBENV_ROOT}/bin:${PATH}"
+    eval "$(rbenv init -)"
 fi
 
 # If not running interactively, don't do anything
@@ -77,12 +79,21 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+export TERM=xterm-256color
+export ALTERNATE_EDITOR=""
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+else
+    if which mate >/dev/null; then
+        export EDITOR="mate"
+    else
+        export EDITOR='vim'
+    fi
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
