@@ -7,6 +7,8 @@ set shortmess=atI
 " No beep
 set noerrorbells
 set novisualbell
+set t_vb=
+autocmd! GUIEnter * set vb t_vb=
 
 " GUI
 set go=
@@ -14,6 +16,7 @@ set number
 set scrolloff=3
 set laststatus=2
 set lazyredraw
+set guioptions=e
 
 if has("gui_running")
   if has("gui_gtk2")
