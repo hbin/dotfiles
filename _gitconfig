@@ -1,32 +1,35 @@
 [user]
-	name = hbin
-	email = huangbin88@foxmail.com
+  name = hbin
+  email = huangbin88@foxmail.com
 
 [color]
+  ui = true
   diff = auto
   status = auto
   branch = auto
+  pager  = true
   interactive = auto
-  ui = true
-  pager = true
 
 [core]
-	editor = vim
-
-[core]
-  pager = less -FRSX
+  editor = vim
+  pager  = less -FRSX
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 
 [diff]
   tool = vimdiff
-
 [difftool]
   prompt = false
 
 [merge]
   tool = vimdiff
+
 [credential]
-	helper = osxkeychain
-[push]
-	default = simple
+  helper = osxkeychain
+
+[grep]
+  extendRegexp = true
+  lineNumber = true
+
+[alias]
+  g = grep --break --heading --line-number
