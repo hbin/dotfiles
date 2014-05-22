@@ -29,11 +29,6 @@ ZSH_THEME="robbyrussell"
 alias bet='ctags -e -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclude=tmp --exclude=.git --exclude=public .'
 alias bvt='ctags -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclude=tmp --exclude=.git --exclude=public .'
 
-# Emacs aliases
-# alias e="emacsclient -c"
-# alias t="emacsclient -t"
-# alias ec="emacsclient -e '(kill-emacs)'"
-
 # Tmux aliases
 alias tmux='tmux -u'
 alias t='tmux -u'
@@ -97,3 +92,8 @@ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+
+# include .zshrc.local if it exists
+if [ -f "$HOME/.zshrc.local" ]; then
+  . "$HOME/.zshrc.local"
+fi
