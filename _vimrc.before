@@ -89,6 +89,8 @@ set clipboard=unnamed
 """"""""""""""""""""""""""""""
 let mapleader = ","
 
+nmap Y y$
+
 imap jj <ESC>
 imap <C-b> <ESC>i
 imap <C-f> <ESC>la
