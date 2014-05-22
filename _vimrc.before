@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""
-" Creator: hbin - embrace.hbin@gmail.com
+" Creator: hbin - huangbin88@foxmail.com
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 set shortmess=atI
@@ -88,6 +88,8 @@ set clipboard=unnamed
 " =>>> Keys
 """"""""""""""""""""""""""""""
 let mapleader = ","
+
+nmap Y y$
 
 imap jj <ESC>
 imap <C-b> <ESC>i
