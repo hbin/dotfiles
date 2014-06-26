@@ -7,3 +7,8 @@ require 'rubygems'
 IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:PROMPT_MODE] = :SIMPLE
 IRB.conf[:AUTO_INDENT] = true
+
+if defined?(Rails::Railtie)
+  ActiveRecord::Base.logger = Rails.logger
+  ActiveSupport::Cache::Store.logger = Rails.logger
+end
