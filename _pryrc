@@ -12,3 +12,8 @@ end
 
 # History
 Pry.config.history.file = "~/.irb_history"
+
+if defined?(Rails::Railtie)
+  ActiveRecord::Base.logger = Rails.logger
+  ActiveSupport::Cache::Store.logger = Rails.logger
+end
