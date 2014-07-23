@@ -32,6 +32,7 @@
 --ignore-dir=.idea
 --ignore-dir=vendor/bundle
 --ignore-dir=vendor/jruby-bundle
+--ignore-dir=elpa
 --ignore-dir=tmp
 --ignore-dir=cache
 --ignore-dir=log
