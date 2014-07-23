@@ -44,6 +44,7 @@ fi
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
 alias gd='git diff'
