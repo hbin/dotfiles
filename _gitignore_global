@@ -29,11 +29,12 @@ ehthumbs.db
 Thumbs.db
 
 # Other dev-related files
+*~
 *.bak
 *.orig
 *.sass-cache
 .directory
-*~
+.rake_tasks
 .svn/*
 *.swp
 svn-commit.*
