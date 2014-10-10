@@ -1,24 +1,4 @@
-# Pow
-.powenv
-
-# Compiled source
-*.pyc
-*.pyo
-
-# IDE specific
-dwsync.xml
-*.tmp
-*.wpr
-*.project
-*.cproject
-*.tmproj
-*.tmproject
-*.vi
-*.komodoproject
-.komodotools
-nbproject
-
-# OS generated files
+# Mac OS X
 ._*
 .cache
 .Spotlight-V100
@@ -28,16 +8,62 @@ desktop.ini
 ehthumbs.db
 Thumbs.db
 
-# Other dev-related files
+# Linux
 *~
 *.bak
-*.orig
-*.sass-cache
 .directory
-.rake_tasks
-.svn/*
-*.swp
-svn-commit.*
-tags
+
+# Emacs
+*.elc
+.mc-lists.el
+.cask
+ac-comphist.dat
+auto-save-list
+recentf
+savehist
+saveplace
+eshell
+elpa/
+el-get/
+tramp
+savefile/
+url/
+projectile-bookmarks.eld
+custom.el
 TAGS
+GPATH
+GRTAGS
+GTAGS
+*_flymake.*
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+tags
+
+# TextMate
+*.tmproj
+*.tmproject
 tmtags
+
+# Pow
+.powenv
+
+# Rails
+/.bundle
+/vendor/bundle
+/log
+/tmp
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/spec/tmp
+config/initializers/secret_token.rb
+config/secrets.yml
+config/newrelic.yml
+.rake_tasks
+*.sass-cache
+
+*.swp
