@@ -1,19 +1,3 @@
 #!/usr/bin/env ruby -w
 
 Pry.editor = 'vi'
-
-# Using pry as a debugger
-if defined?(PryDebugger)
-  Pry.commands.alias_command 'c', 'continue'
-  Pry.commands.alias_command 's', 'step'
-  Pry.commands.alias_command 'n', 'next'
-  Pry.commands.alias_command 'f', 'finish'
-end
-
-# History
-Pry.config.history.file = "~/.irb_history"
-
-if defined?(Rails::Railtie)
-  ActiveRecord::Base.logger = Rails.logger
-  ActiveSupport::Cache::Store.logger = Rails.logger
-end
