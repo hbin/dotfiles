@@ -60,10 +60,15 @@ tmtags
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /spec/tmp
-config/initializers/secret_token.rb
-config/secrets.yml
-config/newrelic.yml
 .rake_tasks
 *.sass-cache
+
+# Python
+__pycache__/
+*.py[cod]
+
+# coverage reports
+htmlcov/
+.coverage
 
 *.swp
