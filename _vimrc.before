@@ -102,6 +102,11 @@ imap <C-f> <ESC>la
 " CtrlP
 let g:ctrlp_max_height=500
 
+" NERDTree
+nmap <leader>f :NERDTreeFind<CR>
+
+" Resolve key mapping conflict
+nnoremap <leader>cr <Plug>RooterChangeToRootDirectory
 
 " Ctags
 set tags=tags
