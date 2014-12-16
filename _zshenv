@@ -6,5 +6,10 @@ export LANGUAGE=en_US.UTF-8
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+    export PATH="$HOME/bin:$PATH"
+fi
+
+# set Homebrew's sbin
+if which brew > /dev/null ; then
+    export PATH="/usr/local/sbin:$PATH"
 fi
