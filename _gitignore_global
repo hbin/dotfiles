@@ -66,6 +66,7 @@ tmtags
 # Python
 __pycache__/
 *.py[cod]
+.python-version
 
 # coverage reports
 htmlcov/
