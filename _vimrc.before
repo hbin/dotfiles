@@ -113,3 +113,8 @@ set tags=tags
 set tags+=../tags
 set autochdir
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+
+" python-mode
+" let g:pymode_options_max_line_length = 0
+let g:pymode_warnings = 0
+let g:pymode_options_colorcolumn = 0
