@@ -28,6 +28,7 @@ el-get/
 tramp
 savefile/
 url/
+.projectile
 projectile-bookmarks.eld
 custom.el
 TAGS
@@ -67,6 +68,7 @@ tmtags
 __pycache__/
 *.py[cod]
 .python-version
+venv/
 
 # coverage reports
 htmlcov/
