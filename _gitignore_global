@@ -15,6 +15,7 @@ Thumbs.db
 
 # Emacs
 *.elc
+.#*
 .mc-lists.el
 .cask
 ac-comphist.dat
