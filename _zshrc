@@ -94,8 +94,8 @@ export ALTERNATE_EDITOR=""
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
-    if which mate >/dev/null; then
-        export EDITOR="mate"
+    if which mvim >/dev/null; then
+        export EDITOR="mvim"
     else
         export EDITOR='vim'
     fi
