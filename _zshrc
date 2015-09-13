@@ -47,16 +47,16 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew git rbenv ruby pyenv python gem bundler rails rake capistrano pip virtualenv npm vagrant docker)
+plugins=(brew git rbenv gem bundler rails pyenv python pip vagrant)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# pyenv-vertualenv
-if [ -d "${PYENV_ROOT}" ]; then
-    eval "$(pyenv virtualenv-init -)"
-fi
+# brew install pyenv-vertualenv
+# if [ -d "${PYENV_ROOT}" ]; then
+#     eval "$(pyenv virtualenv-init -)"
+# fi
 
 # nvm
 _homebrew-installed() {
@@ -115,10 +115,6 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Tag aliases
-alias bet='ctags -e -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclude=tmp --exclude=.git --exclude=public .'
-alias bvt='ctags -R --extra=+fq --exclude=db --exclude=doc --exclude=log --exclude=tmp --exclude=.git --exclude=public .'
 
 # include .zshrc.local if it exists
 if [ -f "$HOME/.zshrc.local" ]; then
