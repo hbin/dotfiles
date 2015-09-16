@@ -81,9 +81,17 @@ for nvmdir in "${nvmdirs[@]}" ; do
 
         export NVM_ROOT=$nvmdir
         eval "source $NVM_ROOT/nvm.sh"
+
+        # Completion
+        if [ -s $NVM_ROOT/etc/bash_completion.d/nvm ] ; then
+          eval "source $NVM_ROOT/etc/bash_completion.d/nvm"
+        fi
     fi
 done
 unset nvmdir
+
+# npm
+eval "$(npm completion 2>/dev/null)"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -115,6 +123,7 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias npm-list='npm list --global --depth 0'
 
 # include .zshrc.local if it exists
 if [ -f "$HOME/.zshrc.local" ]; then
