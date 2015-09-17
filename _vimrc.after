@@ -2,4 +2,4 @@
 colorscheme molokai
 
 " Remove AuGoup for NERDTree. I do not need auto refresh the NERDTree!
-augroup! AuNERDTreeCmd
+autocmd! AuNERDTreeCmd FocusGained
