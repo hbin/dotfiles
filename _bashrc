@@ -51,6 +51,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# include .alias if it exists
+if [ -f "$HOME/.alias" ]; then
+    . "$HOME/.alias"
+fi
+
 # Alias definitions.
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -64,7 +69,6 @@ alias gco='git checkout'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias npm-list='npm list --global --depth 0'
 
 # User configuration
 export SSH_KEY_PATH="~/.ssh/id_rsa"
