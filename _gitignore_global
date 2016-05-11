@@ -37,6 +37,7 @@ GPATH
 GRTAGS
 GTAGS
 *_flymake.*
+.agignore
 
 # Vim
 [._]*.s[a-w][a-z]
