@@ -2,3 +2,5 @@ alias npm-list='npm list --global --depth 0'
 
 alias users="awk -F':' '{ print $1}' /etc/passwd"
 alias groups="cut -d: -f1 /etc/group"
+
+alias dns='sudo killall -HUP mDNSResponder'
