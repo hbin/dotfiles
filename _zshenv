@@ -3,13 +3,3 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    export PATH="$HOME/bin:$PATH"
-fi
-
-# set Homebrew's sbin
-if which brew > /dev/null ; then
-    export PATH="/usr/local/sbin:$PATH"
-fi
