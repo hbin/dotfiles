@@ -21,6 +21,20 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
 fi
 
+# goenv
+export GOENV_ROOT="${HOME}/.goenv"
+if [ -d "${GOENV_ROOT}" ]; then
+    export PATH="${GOENV_ROOT}/bin:${PATH}"
+    eval "$(goenv init -)"
+fi
+
+# exenv
+export EXENV_ROOT="${HOME}/.exenv"
+if [ -d "${EXENV_ROOT}" ]; then
+    export PATH="${EXENV_ROOT}/bin:${PATH}"
+    eval "$(exenv init -)"
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
