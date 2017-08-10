@@ -47,67 +47,50 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew git asdf ruby gem bundler rails go python pip)
+plugins=(brew git bundler)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# brew install pyenv-vertualenv
-# if [ -d "${PYENV_ROOT}" ]; then
-#     eval "$(pyenv virtualenv-init -)"
-# fi
-
 # nvm
-# _homebrew-installed() {
-#     type brew &> /dev/null
-# }
-#
-# _nvm-from-homebrew-installed() {
-#     brew --prefix nvm &> /dev/null
-# }
-#
-# FOUND_NVM=0
-# nvmdirs=("$HOME/.nvm")
-# if _homebrew-installed && _nvm-from-homebrew-installed ; then
-#     nvmdirs=($(brew --prefix nvm) "${nvmdirs[@]}")
-# fi
-#
-# for nvmdir in "${nvmdirs[@]}" ; do
-#     if [ -s $nvmdir/nvm.sh -a $FOUND_NVM -eq 0 ] ; then
-#         FOUND_NVM=1
-#         # Prevent lost installed nodes upon upgrading nvm.
-#         export NVM_DIR=~/.nvm
-#
-#         export NVM_ROOT=$nvmdir
-#         eval "source $NVM_ROOT/nvm.sh"
-#
-#         # Completion
-#         if [ -s $NVM_ROOT/etc/bash_completion.d/nvm ] ; then
-#           eval "source $NVM_ROOT/etc/bash_completion.d/nvm"
-#         fi
-#     fi
-# done
-# unset nvmdir
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
-# npm
-eval "$(npm completion 2>/dev/null)"
+# rbenv
+export RBENV_ROOT="${HOME}/.rbenv"
+if [ -d "${RBENV_ROOT}" ]; then
+    export PATH="${RBENV_ROOT}/bin:${PATH}"
+    eval "$(rbenv init -)"
+fi
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# pyenv
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -d "${PYENV_ROOT}" ]; then
+    export PATH="${PYENV_ROOT}/bin:${PATH}"
+    eval "$(pyenv init -)"
+fi
+
+# goenv
+export GOENV_ROOT="${HOME}/.goenv"
+if [ -d "${GOENV_ROOT}" ]; then
+    export PATH="${GOENV_ROOT}/bin:${PATH}"
+    eval "$(goenv init -)"
+fi
+
+# exenv
+export EXENV_ROOT="${HOME}/.exenv"
+if [ -d "${EXENV_ROOT}" ]; then
+    export PATH="${EXENV_ROOT}/bin:${PATH}"
+    eval "$(exenv init -)"
+fi
+# }}}
 
 export TERM=xterm-256color
 export ALTERNATE_EDITOR=""
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-else
-    if which mvim >/dev/null; then
-        export EDITOR="mvim"
-    else
-        export EDITOR='vim'
-    fi
-fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
