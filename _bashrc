@@ -76,6 +76,9 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 export TERM=xterm-256color
 export ALTERNATE_EDITOR=""
 
+# Press Ctrl+D forty-two times before it actually quits the shell
+export IGNOREEOF=42
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
