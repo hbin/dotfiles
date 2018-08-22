@@ -53,6 +53,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+export PATH="/usr/local/sbin:$PATH"
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -78,6 +80,9 @@ if [ -d "$GOENV_ROOT" ]; then
     export PATH="$GOENV_ROOT/bin:$PATH"
     eval "$(goenv init -)"
 fi
+export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
 
 # exenv
 export EXENV_ROOT="$HOME/.exenv"
