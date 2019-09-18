@@ -75,14 +75,16 @@ if [ -d "$PYENV_ROOT" ]; then
 fi
 
 # goenv
+export GOENV_DISABLE_GOPATH=1
 export GOENV_ROOT="$HOME/.goenv"
 if [ -d "$GOENV_ROOT" ]; then
     export PATH="$GOENV_ROOT/bin:$PATH"
     eval "$(goenv init -)"
+
+    export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
+    export GOPATH=$HOME/go
+    export GOBIN=$GOPATH/bin
 fi
-export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
 
 # exenv
 export EXENV_ROOT="$HOME/.exenv"
