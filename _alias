@@ -4,3 +4,6 @@ alias users="awk -F':' '{ print $1}' /etc/passwd"
 alias groups="cut -d: -f1 /etc/group"
 
 alias dns='sudo killall -HUP mDNSResponder'
+alias reset-launchpad='defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock'
+
+alias emulator='~/Library/Android/sdk/emulator/emulator'

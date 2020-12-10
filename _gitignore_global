@@ -73,12 +73,17 @@ __pycache__/
 .python-version
 venv/
 
+# Golang
+.go-version
+
 # coverage reports
 htmlcov/
 .coverage
 
-*.swp
+# Vagrant
+.vagrant/
 
+*.swp
 
 # Xcode
 #

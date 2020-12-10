@@ -75,6 +75,11 @@ if [ -f "$HOME/.alias" ]; then
     . "$HOME/.alias"
 fi
 
+# include .bashrc.local if it exists
+if [ -f "$HOME/.bashrc.local" ]; then
+    . "$HOME/.bashrc.local"
+fi
+
 # Alias definitions.
 alias ..='cd ..'
 alias ...='cd ../..'
