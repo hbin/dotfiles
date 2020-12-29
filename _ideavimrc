@@ -1,1 +1,47 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+
+""" Common settings -------------------------
+set showmode
+set scrolloff=2 " 2 lines above/below cursor
+set su
+
+set incsearch
+set ignorecase
+
+set clipboard+=unnamed " Copy to system clipboard as well
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+""" Mappings --------------------------------
 :imap jj <ESC>
+
+" Tabs
+nnoremap gT :action PreviousTab<cr>
+nnoremap gt :action NextTab<cr>
+
+nmap <S-Space> <Action>(GotoNextError)
+
+" Refactorings
+nmap <leader>r <Action>(RenameElement)
+
+" File Tree
+nmap <leader>f <Action>(ActivateProjectToolWindow)
+nmap <leader>s <Action>(SelectInProjectView)
+
+nmap <leader>z <Action>(ToggleDistractionFreeMode)
+nmap <leader>a <Action>(Annotate)
+nmap <leader>o <Action>(FileStructurePopup)
+nmap <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+
+nmap <leader>m :action ToggleBookmark<cr>
+nmap <leader>b :action ShowBookmarks<cr>
+

@@ -1,6 +1,6 @@
 " Theme
-" colorscheme molokai
-colorscheme hydrangea
+colorscheme molokai
+" colorscheme hydrangea
 
 " Remove AuGoup for NERDTree. I do not need auto refresh the NERDTree!
 autocmd! AuNERDTreeCmd FocusGained
