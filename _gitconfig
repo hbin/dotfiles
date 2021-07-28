@@ -34,3 +34,6 @@
 
 [alias]
   g = grep --break --heading --line-number
+
+[url "git@gitlab.myteksi.net:"]
+	insteadOf = https://gitlab.myteksi.net/
