@@ -31,6 +31,9 @@ if [ -d "$GOENV_ROOT" ]; then
     export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
     export GOPATH=$HOME/go
     export GOBIN=$GOPATH/bin
+    # export PATH="$PATH:$GOROOT/bin:$GOBIN"
+    export PATH="$PATH:$GOBIN"
+    export GO111MODULE=auto
 fi
 
 # exenv
