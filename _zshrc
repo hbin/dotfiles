@@ -55,6 +55,12 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="/usr/local/sbin:$PATH"
 
+# Emacs doom {{{
+if [ -d "$HOME/.emacs.d" ]; then
+    export PATH="$HOME/.emacs.d/bin:$PATH"
+fi
+# }}}
+
 # nvm {{{
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
