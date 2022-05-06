@@ -2,6 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Emacs doom {{{
+if [ -d "$HOME/.emacs.d" ]; then
+    export PATH="$HOME/.emacs.d/bin:$PATH"
+fi
+# }}}
+
 # nvm {{{
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
