@@ -38,8 +38,6 @@ if [ -d "$GOENV_ROOT" ]; then
     eval "$(goenv init -)"
 
     export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
-else
-    export GOROOT="$(brew --prefix golang)/libexec"
 fi
 
 export GOPATH=$HOME/go

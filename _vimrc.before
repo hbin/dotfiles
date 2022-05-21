@@ -19,7 +19,7 @@ set lazyredraw
 set guioptions=e
 
 if has("gui_running")
-  if has("gui_gtk2")
+  if has("gui_gtk3")
     set guifont=Monaco\ 14
   elseif has("gui_win32")
     set guifont=Monaco:h14:cANSI
