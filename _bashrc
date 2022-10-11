@@ -42,7 +42,8 @@ fi
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export PATH="$PATH:$GOBIN:$GOROOT/bin"
+export PATH="$PATH:$GOBIN"
+# export PATH="$PATH:$GOBIN:$GOROOT/bin"
 
 export GO111MODULE=auto
 # }}}
