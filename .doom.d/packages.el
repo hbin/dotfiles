@@ -62,3 +62,6 @@
 
 (package! dockerfile-mode :recipe
   (:host github :repo "spotify/dockerfile-mode"))
+
+(package! org)
+(package! org-bullets)

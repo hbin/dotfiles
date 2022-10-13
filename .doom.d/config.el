@@ -42,10 +42,6 @@
 ;; Display fullscreen after startup.
 ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
 ;; Set the default tab-width
 (setq-default tab-width 4)
 
@@ -204,9 +200,9 @@
   (neo-theme 'ascii)                    ; TODO: fix
   (neo-show-hidden-files nil)
   :bind (:map neotree-mode-map
-         ("d" . nil)
-         ("D" . neotree-delete-node)
-         ("I" . neotree-hidden-file-toggle))
+              ("d" . nil)
+              ("D" . neotree-delete-node)
+              ("I" . neotree-hidden-file-toggle))
   :config
   (add-to-list 'neo-hidden-regexp-list "TAGS\\|GPATH\\|GRTAGS\\|GTAGS"))
 
@@ -252,7 +248,7 @@
   :requires ruby-mode
   :commands (ruby-toggle-hash-syntax)
   :bind (:map ruby-mode-map
-         ("C-c #" . 'ruby-toggle-hash-syntax)))
+              ("C-c #" . 'ruby-toggle-hash-syntax)))
 
 (use-package! projectile-rails
   :defer t
@@ -278,3 +274,49 @@
 (use-package! dockerfile-mode
   :defer t
   :mode (("Dockerfile\\'" . dockerfile-mode)))
+
+(defun efs/org-font-setup ()
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Monaco" :weight 'regular :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(use-package org
+  :config
+  (setq org-ellipsis " ▾")
+
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+
+  (setq org-directory "~/org/")
+  (setq org-agenda-files '("~/org/Tasks.org"))
+
+  (efs/org-font-setup))
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list
+   '("◉" "○" "●" "○" "●" "○" "●")))
