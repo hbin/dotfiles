@@ -1,0 +1,4 @@
+# name: form_for text_area
+# key: ffta
+# --
+<%= f.text_area :${1:attribute} %>$0

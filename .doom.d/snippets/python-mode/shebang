@@ -1,0 +1,5 @@
+# name: shebang and coding comments
+# key: #!
+# --
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-

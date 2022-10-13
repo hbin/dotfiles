@@ -1,0 +1,13 @@
+# name: Module Docstring
+# key: docs
+# --
+"""
+File: ${1:`(file-name-nondirectory
+ (file-name-sans-extension
+  (or (buffer-file-name)
+      (buffer-name (current-buffer)))))`}
+Author: bhuang
+Email: bhuang@appannie.com
+Github: bhuang-aa
+Description: ${0}
+"""

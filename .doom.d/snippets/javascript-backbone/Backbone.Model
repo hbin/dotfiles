@@ -1,0 +1,12 @@
+# name: Backbone.Model
+# key: model
+# --
+var $1 = Backbone.Model.extend({
+  defaults: {
+    $0
+  },
+  initialize: function() {
+  },
+  validate: function(attrs) {
+  }
+});

@@ -1,0 +1,4 @@
+# name: simple_form_for input
+# key: sfi
+# --
+<%= f.input :${0:attribute} %>

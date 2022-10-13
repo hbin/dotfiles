@@ -1,0 +1,4 @@
+# name: submit_tag
+# key: st
+# --
+<%= submit_tag("$0") %>

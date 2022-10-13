@@ -20,4 +20,6 @@ ln -sf ~/dotfiles/.vimrc.before ~/.vimrc.before
 ln -sf ~/dotfiles/.zshenv ~/.zshenv
 ln -sf ~/dotfiles/.zshrc ~/.zshrc
 
+ln -sf ~/dotfiles/.doom.d ~/.doom.d
+
 cp ./karabiner.json ~/.config/karabiner/karabiner.json

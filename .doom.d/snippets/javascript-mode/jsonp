@@ -1,0 +1,4 @@
+# name: JSON.parse
+# key: jsonp
+# --
+JSON.parse(${1:jstr});

@@ -1,0 +1,4 @@
+# name: transaction
+# key: trans
+# --
+transaction${1} { $0 }

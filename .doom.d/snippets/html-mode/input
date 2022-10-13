@@ -1,0 +1,3 @@
+# key: input
+# --
+<input type="${1:$$(yas/choose-value '("text" "submit" "hidden" "button" "image"))}" name="$2" id="${3:$2}" value="$0" />

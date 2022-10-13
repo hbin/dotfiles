@@ -1,0 +1,4 @@
+# name: assertQuerysetEqual
+# key: aqe
+# --
+assertQuerysetEqual($0)

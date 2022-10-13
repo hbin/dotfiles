@@ -1,0 +1,4 @@
+# name: sort { |a, b| .. }
+# key: sort
+# --
+sort { |a, b| $0 }

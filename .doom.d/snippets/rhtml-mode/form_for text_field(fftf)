@@ -1,0 +1,4 @@
+# name: form_for text_field
+# key: fftf
+# --
+<%= f.text_field :${1:attribute} %>$0

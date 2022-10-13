@@ -1,0 +1,4 @@
+# name: script src
+# key: scriptsrc
+# --
+<script src="$0" type="text/javascript" charset="utf-8"></script>

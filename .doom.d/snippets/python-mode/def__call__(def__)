@@ -1,0 +1,5 @@
+# name: define __call__(self)
+# key: def__
+# --
+def __call__(self):
+	${0:pass}

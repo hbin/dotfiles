@@ -1,0 +1,4 @@
+# name: downto
+# key: downto
+# --
+downto(${1:0}) { |$2| $0 }

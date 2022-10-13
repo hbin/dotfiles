@@ -1,0 +1,7 @@
+# name: { |variable| ... }
+# key: {
+# --
+{ $0 `(let ((char (char-after (point))))
+                        (unless (and (characterp char)
+                                     (char-equal char ?\}))
+                          (message "}")))`

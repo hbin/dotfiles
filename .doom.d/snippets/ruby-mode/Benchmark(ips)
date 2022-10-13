@@ -1,0 +1,11 @@
+# name : Benchmark.ips do ... end
+# key: bmips
+# --
+require 'benchmark/ips'
+
+Benchmark.ips do |x|
+  x.report '$0' do
+  end
+
+  x.compare!
+end

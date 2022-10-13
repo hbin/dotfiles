@@ -1,0 +1,5 @@
+# name: __name__
+# key: main
+# --
+if __name__ == "__main__":
+    $(0:app.run())

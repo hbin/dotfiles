@@ -1,0 +1,6 @@
+# name: define function
+# key: def
+# --
+def ${1:fname}(self):
+    """${2:docstring for fname}"""
+    $0

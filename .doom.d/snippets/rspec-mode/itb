@@ -1,0 +1,6 @@
+# name: RSpec it ... do
+# key: itb
+# --
+it '$1' do
+  $0
+end

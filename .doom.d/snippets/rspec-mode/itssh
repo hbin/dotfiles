@@ -1,0 +1,4 @@
+# name: RSpec its(...) { should ... }
+# key: itssh
+# --
+its(:$1) { should $0 }

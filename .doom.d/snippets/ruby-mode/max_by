@@ -1,0 +1,4 @@
+# name: max_by
+# key: max_by
+# --
+max_by { |${1:x}| $0 }

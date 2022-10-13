@@ -1,0 +1,4 @@
+# name Digest::MD5.base64digest
+# key: md5
+# --
+Digest::MD5.base64digest($0)

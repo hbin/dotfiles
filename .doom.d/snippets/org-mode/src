@@ -1,0 +1,5 @@
+# name: #+BEGIN_SRC ... #+END_SRC
+# key: src
+# --
+#+BEGIN_SRC $0
+#+END_SRC

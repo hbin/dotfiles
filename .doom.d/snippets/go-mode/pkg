@@ -1,0 +1,8 @@
+# name: pkgm
+# key: pkgm
+# --
+package main
+
+func main() {
+  $1
+}

@@ -1,0 +1,5 @@
+# name: define __getattr__(self, attr)
+# key: def__
+# --
+def __getattr__(self, attr):
+	${0:pass}

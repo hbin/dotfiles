@@ -1,0 +1,4 @@
+# name: assertEqual
+# key: ae
+# --
+assertEqual($0)

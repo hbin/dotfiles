@@ -1,0 +1,6 @@
+# name: jquery.ready
+# key: ready
+# --
+$(function () {
+  $0
+});

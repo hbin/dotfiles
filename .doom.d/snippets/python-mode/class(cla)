@@ -1,0 +1,5 @@
+# name: class
+# key: cla
+# --
+class ${1:T}(object):
+	$0

@@ -1,0 +1,5 @@
+# name: def __init__(self)
+# key: defi
+# --
+def __init__(self):
+    ${0:pass}

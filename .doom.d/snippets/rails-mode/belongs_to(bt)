@@ -1,0 +1,4 @@
+# name: belongs_to
+# key: bt
+# --
+belongs_to :$0

@@ -1,0 +1,6 @@
+# name: publich class
+# key: cls
+# --
+public class ${1:`(file-name-sans-extension (buffer-name))`}$2 {
+    $0
+}

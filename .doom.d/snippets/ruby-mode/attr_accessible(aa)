@@ -1,0 +1,4 @@
+# name : attr_accessible
+# key: aa
+# --
+attr_accessible :

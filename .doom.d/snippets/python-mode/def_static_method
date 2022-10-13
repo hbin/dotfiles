@@ -1,0 +1,7 @@
+# name: define static function
+# key: defs
+# --
+@staticmethod
+def ${1:smname}():
+    """${2:docstring for static method name}"""
+    $0

@@ -1,0 +1,6 @@
+# name: for(django-mode)
+# key: for
+# --
+{% for $1 in $2 %}
+  $0
+{% endfor %}

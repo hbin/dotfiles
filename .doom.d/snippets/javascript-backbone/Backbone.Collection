@@ -1,0 +1,7 @@
+# name: Backbone.Collection
+# key: collection
+# --
+var $1Collection = Backbone.Collection.extend({
+  model: $2,
+  url: '$0'
+});

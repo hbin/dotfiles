@@ -1,0 +1,4 @@
+# name: RSpec expect(...).to ...
+# key: expect
+# --
+expect($1).to $0

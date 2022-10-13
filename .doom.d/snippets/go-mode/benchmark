@@ -1,0 +1,6 @@
+# name: func Benchmark$1(b *testing.B) { ... }
+# key: bm
+# --
+func Benchmark$1(b *testing.B) {
+	$0
+}

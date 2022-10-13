@@ -1,0 +1,25 @@
+# name: MiniTest::Test
+# key: mt
+# --
+#!/usr/bin/env ruby
+begin
+  gem 'minitest', '>= 5.0.0'
+  gem 'minitest-reporters'
+  require 'minitest/autorun'
+  require 'minitest/reporters'
+
+  Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+rescue Gem::LoadError => e
+  puts "\nMissing Dependency:\n#{e.backtrace.first} #{e.message}"
+  puts 'Minitest 5.0 gem must be installed for the xRuby track.'
+end
+
+class ${`(let ((fn (capitalize (file-name-nondirectory
+                                 (file-name-sans-extension
+         (or (buffer-file-name)
+             (buffer-name (current-buffer))))))))
+           (cond
+             ((string-match "_" fn) (replace-match "" nil nil fn))
+              (t fn)))`}Test < MiniTest::Test
+  $0
+end

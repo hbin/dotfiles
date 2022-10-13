@@ -1,0 +1,9 @@
+# name: try...except...finally
+# key: try
+# --
+try:
+    $0
+except ($1), e:
+    $2
+finally:
+	$3

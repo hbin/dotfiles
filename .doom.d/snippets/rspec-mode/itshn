@@ -1,0 +1,4 @@
+# name: RSpec it { should_not ... }
+# key: itshn
+# --
+it { should_not $0 }

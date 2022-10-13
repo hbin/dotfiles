@@ -1,0 +1,4 @@
+# name: each_line { |line| ... }
+# key: each_line
+# --
+each_line { |${1:line}| $0 }

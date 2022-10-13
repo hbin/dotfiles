@@ -1,0 +1,5 @@
+# name: define __getitem__(self, n)
+# key: def__
+# --
+def __getitem__(self, n):
+	${0:pass}

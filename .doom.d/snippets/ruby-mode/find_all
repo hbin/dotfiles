@@ -1,0 +1,4 @@
+# name: find_all
+# key: find_all
+# --
+find_all { |${1:x}| $0 }

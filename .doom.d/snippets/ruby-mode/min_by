@@ -1,0 +1,4 @@
+# name: min_by
+# key: min_by
+# --
+min_by { |${1:x}| $0 }

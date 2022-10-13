@@ -1,0 +1,4 @@
+# name Digest::SHA1.hexdigest
+# key: hex
+# --
+Digest::SHA1.hexdigest

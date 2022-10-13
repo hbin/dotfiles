@@ -1,0 +1,7 @@
+# name: respond_to
+# key: respond_to
+# --
+respond_to do |format|
+  format.html { $1 }
+  format.js { $0 }
+end

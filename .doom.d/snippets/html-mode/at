@@ -1,0 +1,3 @@
+# key: at
+# --
+<a href="$1" target="_blank">$0</a>
