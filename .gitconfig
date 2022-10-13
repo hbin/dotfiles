@@ -34,6 +34,3 @@
 
 [alias]
   g = grep --break --heading --line-number
-
-[url "git@gitlab.example.com:"]
-	insteadOf = https://gitlab.example.com/
