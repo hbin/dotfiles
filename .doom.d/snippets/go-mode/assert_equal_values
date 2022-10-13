@@ -1,0 +1,4 @@
+# name: assert.EqualValues(t, expect, actual)
+# key: aev
+# --
+assert.EqualValues(t, ${1:expect}, ${0:actual})

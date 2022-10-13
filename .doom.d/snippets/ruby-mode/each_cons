@@ -1,0 +1,4 @@
+# name: each_cons(..) { |..| ... }
+# key: each_cons
+# --
+each_cons(${1:2}) { |${2:group}| $0 }

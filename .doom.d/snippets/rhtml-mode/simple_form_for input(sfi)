@@ -1,0 +1,4 @@
+# name: simple_form_for button
+# key: sfb
+# --
+<%= f.button :${0:submit} %>

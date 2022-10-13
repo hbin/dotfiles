@@ -1,0 +1,4 @@
+# name: fetch
+# key: fetch
+# --
+fetch(${1:name}) { |${2}| $0 }

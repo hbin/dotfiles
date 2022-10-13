@@ -1,0 +1,4 @@
+# name: RSpec it
+# key: it
+# --
+it { $0 }

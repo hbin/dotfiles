@@ -1,0 +1,6 @@
+# name: for in
+# key: fori
+# --
+for (var ${1:prop} in ${2:Things}) {
+  ${3:$2[$1]}
+}

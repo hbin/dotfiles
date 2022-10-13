@@ -1,0 +1,4 @@
+# name: assert.NotEqual(t, expect, actual)
+# key: ane
+# --
+assert.NotEqual(t, ${1:expect}, ${0:actual})

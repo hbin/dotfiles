@@ -1,0 +1,6 @@
+# name: RSpec describe
+# key: describe
+# --
+describe '$1' do
+  $0
+end

@@ -1,0 +1,4 @@
+# name: form_for lable
+# key: ffl
+# --
+<%= f.label $0 %>

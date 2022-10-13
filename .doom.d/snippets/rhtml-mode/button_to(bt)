@@ -1,0 +1,4 @@
+# name: button_to
+# key: bt
+# --
+<%= button_to "$1", ${0:path} %>

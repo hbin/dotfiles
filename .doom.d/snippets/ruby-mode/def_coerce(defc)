@@ -1,0 +1,6 @@
+# name: def coerce ... end
+# key: defc
+# --
+def coerce(other)
+  [self, other]
+end

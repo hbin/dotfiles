@@ -1,0 +1,6 @@
+# name: with
+# key: with
+# --
+{% with $1 %}
+  $0
+{% endwith %}

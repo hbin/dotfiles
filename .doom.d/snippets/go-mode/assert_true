@@ -1,0 +1,4 @@
+# name: assert.True(t, actual)
+# key: at
+# --
+assert.True(t, $0)

@@ -1,0 +1,4 @@
+# name: RSpec before
+# key: before
+# --
+before { $0 }

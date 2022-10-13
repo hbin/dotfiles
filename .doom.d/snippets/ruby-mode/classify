@@ -1,0 +1,3 @@
+# name: classify { |...| ... }
+# --
+classify { |$1| $0 }

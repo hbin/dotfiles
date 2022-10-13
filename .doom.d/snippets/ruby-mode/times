@@ -1,0 +1,4 @@
+# name: times { ... }
+# key: times
+# --
+times { $0 }

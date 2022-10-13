@@ -1,0 +1,4 @@
+# name: RSpec it { should ... }
+# key: itsh
+# --
+it { should $0 }

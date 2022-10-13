@@ -1,0 +1,6 @@
+# name: RSpec content
+# key: content
+# --
+content '$1' do
+  $0
+end

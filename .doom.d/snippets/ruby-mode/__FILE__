@@ -1,0 +1,6 @@
+# name: __FILE__
+# key: FILE
+# --
+if \$0 == __FILE__
+   $0
+end

@@ -1,0 +1,4 @@
+# name: RSpec specify
+# key: specify
+# --
+specify { $0 }

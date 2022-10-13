@@ -1,0 +1,16 @@
+# name: Backbone.View
+# key: view
+# --
+var $1View = Backbone.View.extend({
+  model: $2,
+
+  events: {
+  },
+
+  initialize: function() {
+  },
+
+  render: function() {
+    return this;
+  }
+});

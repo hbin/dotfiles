@@ -1,0 +1,4 @@
+# name Digest::MD5.digest
+# key: md5
+# --
+Digest::MD5.digest($0)

@@ -1,0 +1,4 @@
+# name: RSpec subject
+# key: subject
+# --
+subject { $0 }

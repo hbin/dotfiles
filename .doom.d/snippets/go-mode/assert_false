@@ -1,0 +1,4 @@
+# name: assert.False(t, actual)
+# key: af
+# --
+assert.False(t, $0)

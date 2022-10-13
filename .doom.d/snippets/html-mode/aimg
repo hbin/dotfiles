@@ -1,0 +1,5 @@
+# key: aimg
+# --
+<a href="$0">
+  <img src="$1" alt="$2" />
+</a>

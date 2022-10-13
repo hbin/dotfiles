@@ -1,0 +1,4 @@
+# name: each_key { |key| ... }
+# key: each_key
+# --
+each_key { |${1:key}| $0 }

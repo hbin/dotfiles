@@ -1,0 +1,4 @@
+# name: form_for hidden_field
+# key: ffhf
+# --
+<%= f.hidden_field :${1:attribute} %>$0

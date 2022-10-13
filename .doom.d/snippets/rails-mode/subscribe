@@ -1,0 +1,22 @@
+# name: Notifications.subscribe
+# key: subscribe
+# --
+# Subscribing to an event.
+#
+# The block receives the following arguments:
+#   - The name of the event
+#   - Time when it started
+#   - Time when it finished
+#   - An unique ID for this event
+#   - The payload (described in previous sections)
+#
+ActiveSupport::Notifications.subscribe "${1:process_action.action_controller}" do |*args|
+  event = ActiveSupport::Notifications::Event.new(*args)
+
+  event.name      # => "process_action.action_controller"
+  event.duration  # => 10 (in milliseconds)
+  event.payload   # => {:extra=>information}
+
+  # do your custom stuff here
+  $0
+end

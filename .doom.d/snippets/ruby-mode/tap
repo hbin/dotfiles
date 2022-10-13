@@ -1,0 +1,4 @@
+# name: tap { |x| .. }
+# key: tap
+# --
+tap { |x| $0 }

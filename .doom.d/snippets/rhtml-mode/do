@@ -1,0 +1,6 @@
+# name: do |.| ... end
+# key: do
+# --
+<% ${1:method} do |$2| %>
+  $0
+<% end %>

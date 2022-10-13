@@ -1,0 +1,4 @@
+# name: assert_equal
+# key: ae
+# --
+assert_equal $0

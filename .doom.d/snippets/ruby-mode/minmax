@@ -1,0 +1,4 @@
+# name: minmax
+# key: minmax
+# --
+minmax { |a, b| $0 }

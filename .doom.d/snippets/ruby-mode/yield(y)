@@ -1,0 +1,4 @@
+# name: yield ...
+# key: y
+# --
+yield $0

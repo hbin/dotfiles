@@ -1,0 +1,5 @@
+# key: of
+# --
+${1:method_name}: function(${2:attribute}) {
+  $4
+}${3:,}

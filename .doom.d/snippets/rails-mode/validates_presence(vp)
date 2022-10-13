@@ -1,0 +1,4 @@
+# name: validates presence
+# key: vp
+# --
+validates :$0, presence: :true

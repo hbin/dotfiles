@@ -1,0 +1,5 @@
+# key: form
+# --
+<form action="$1" method="$2" accept-charset="utf-8">
+  $0
+</form>

@@ -1,0 +1,4 @@
+# name : binding.remote_pry
+# key: rpry
+# --
+require 'pry-remote'; binding.remote_pry

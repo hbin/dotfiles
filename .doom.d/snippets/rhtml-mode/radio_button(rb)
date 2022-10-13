@@ -1,0 +1,4 @@
+# name: radio_button
+# key: rb
+# --
+<%= radio_button($0) %>

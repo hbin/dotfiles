@@ -1,0 +1,4 @@
+# name: sequence
+# key: sequence
+# --
+sequence(:$1) { $0 }

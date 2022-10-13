@@ -1,0 +1,4 @@
+# name: check_box
+# key: cb
+# --
+<%= check_box($0) %>

@@ -1,0 +1,6 @@
+# name: module.exports
+# key: exports
+# --
+module.exports = {
+  $0
+};

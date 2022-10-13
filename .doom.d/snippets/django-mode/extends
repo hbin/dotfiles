@@ -1,0 +1,4 @@
+# name: extends layout
+# key: extends
+# --
+{% extends "$0" %}
