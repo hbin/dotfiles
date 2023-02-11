@@ -147,14 +147,15 @@
          ("M-O" . (lambda () (interactive) (other-window -1)))))
 
 (use-package! crux
-  :commands (crux-with-region-or-line
+  :commands (crux-move-beginning-of-line
              crux-top-join-line
              crux-cleanup-buffer-or-region)
   :config
   (crux-with-region-or-buffer indent-region)
   (crux-with-region-or-buffer untabify)
 
-  :bind (("s-j" .  'crux-top-join-line)
+  :bind (("C-a" . 'crux-move-beginning-of-line)
+         ("s-j" . 'crux-top-join-line)
          ("s-M-l" . 'crux-cleanup-buffer-or-region)))
 
 (use-package! evil
