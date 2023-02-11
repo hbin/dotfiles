@@ -88,6 +88,7 @@ export GOENV_DISABLE_GOPATH=1
 export GOENV_ROOT="$HOME/.goenv"
 if [ -d "$GOENV_ROOT" ]; then
     export PATH="$GOENV_ROOT/bin:$PATH"
+    export PATH="$GOENV_ROOT/shims:${PATH}"
     eval "$(goenv init -)"
 
     export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
