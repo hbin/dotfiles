@@ -53,33 +53,34 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="$PATH:/usr/local/sbin"
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/usr/local/sbin
 
 # Emacs doom {{{
 if [ -d "$HOME/.emacs.d" ]; then
-    export PATH="$HOME/.emacs.d/bin:$PATH"
+    export PATH=$HOME/.emacs.d/bin:$PATH
 fi
 # }}}
 
 # nvm {{{
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR=$HOME/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 # }}}
 
 # rbenv {{{
-export RBENV_ROOT="$HOME/.rbenv"
+export RBENV_ROOT=$HOME/.rbenv
 if [ -d "$RBENV_ROOT" ]; then
-    export PATH="$RBENV_ROOT/bin:$PATH"
+    export PATH=$RBENV_ROOT/bin:$PATH
     eval "$(rbenv init -)"
 fi
 export RUBY_YJIT_ENABLE=true
 # }}}
 
 # pyenv {{{
-export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_ROOT=$HOME/.pyenv
 if [ -d "$PYENV_ROOT" ]; then
-    export PATH="$PYENV_ROOT/bin:$PATH"
+    export PATH=$PYENV_ROOT/bin:$PATH
     eval "$(pyenv init --path)"
 fi
 # }}}
@@ -88,8 +89,8 @@ fi
 export GOENV_DISABLE_GOPATH=1
 export GOENV_ROOT="$HOME/.goenv"
 if [ -d "$GOENV_ROOT" ]; then
-    export PATH="$GOENV_ROOT/bin:$PATH"
-    export PATH="$GOENV_ROOT/shims:${PATH}"
+    export PATH=$GOENV_ROOT/bin:$PATH
+    export PATH=$GOENV_ROOT/shims:$PATH
     eval "$(goenv init -)"
 
     export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
@@ -98,19 +99,20 @@ else
 fi
 
 export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH="$PATH:$GOBIN"
-# export PATH="$PATH:$GOBIN:$GOROOT/bin"
+export PATH=$PATH:$GOPATH/bin
+
+# export GOBIN=$GOPATH/bin
+# export PATH=$PATH:$GOBIN
 
 export GO111MODULE=auto
 # }}}
 
 # exenv {{{
-export EXENV_ROOT="$HOME/.exenv"
-if [ -d "$EXENV_ROOT" ]; then
-    export PATH="$EXENV_ROOT/bin:$PATH"
-    eval "$(exenv init -)"
-fi
+# export EXENV_ROOT="$HOME/.exenv"
+# if [ -d "$EXENV_ROOT" ]; then
+#     export PATH=$EXENV_ROOT/bin:$PATH
+#     eval "$(exenv init -)"
+# fi
 # }}}
 
 export TERM=xterm-256color
