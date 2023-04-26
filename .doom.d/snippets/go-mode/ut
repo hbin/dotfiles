@@ -1,0 +1,15 @@
+# name: func TestXxx(t *testing.T) { ... }
+# key: ut
+# --
+func Test$1(t *testing.T) {
+	tests := []struct{
+		desc     string
+		expected bool
+	}{
+		{},
+	}
+
+	for _, tt := range tests {
+		$0
+	}
+}
