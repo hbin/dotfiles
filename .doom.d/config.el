@@ -198,14 +198,14 @@
   :defer t
   :custom
   (neo-banner-message "\" Press ? for help.")
-  (neo-theme 'ascii)                    ; TODO: fix
+  (neo-theme 'ascii)
   (neo-show-hidden-files nil)
   :bind (:map neotree-mode-map
               ("d" . nil)
               ("D" . neotree-delete-node)
               ("I" . neotree-hidden-file-toggle))
   :config
-  (add-to-list 'neo-hidden-regexp-list "TAGS\\|GPATH\\|GRTAGS\\|GTAGS"))
+  (add-to-list 'neo-hidden-regexp-list ".DS_Store\\|TAGS\\|GPATH\\|GRTAGS\\|GTAGS"))
 
 (use-package! vertico
   :commands (vertico-repeat)
