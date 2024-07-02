@@ -43,6 +43,7 @@ brew install stats
 ```
 
 ## Docker
+
 ### MySQL
 ```shell
 docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=true -d --restart always -p 3306:3306 mysql
@@ -51,4 +52,11 @@ docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=true -d --restart always -p 3306:3306 m
 ```shell
 brew install mysql-client
 brew link -f mysql-client
+```
+
+## Emacs
+
+### Doom
+```
+brew install coreutils markdown shellcheck fontconfig
 ```
