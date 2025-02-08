@@ -107,9 +107,8 @@
 ;;; Global settings
 
 (bind-key "<f1>" 'help-command)
-
-;; Zen mode ;-p
-(bind-key "M-<return>" 'toggle-frame-fullscreen)
+(bind-key "C-`" '+eshell/toggle)
+(bind-key "M-," 'doom/goto-private-config-file)
 
 (bind-key "s-0" 'balance-windows)
 (bind-key "M-0" 'delete-window)
