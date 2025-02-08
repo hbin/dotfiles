@@ -41,9 +41,6 @@ ZSH_THEME="robbyrussell"
 # yyyy-mm-dd
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -52,9 +49,7 @@ plugins=(brew git bundler zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:/usr/local/sbin
+export PATH=$HOME/.local/bin:$PATH
 
 # Emacs doom {{{
 if [ -d "$HOME/.emacs.d" ]; then
@@ -99,7 +94,7 @@ else
 fi
 
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:$PATH
 
 # export GOBIN=$GOPATH/bin
 # export PATH=$PATH:$GOBIN
