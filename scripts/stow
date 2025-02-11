@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
-ln -sf ~/dotfiles/.alias ~/.alias
-ln -sf ~/dotfiles/.bashrc ~/.bashrc
-ln -sf ~/dotfiles/.bash_profile ~/.bash_profile
-ln -sf ~/dotfiles/.ctags ~/.ctags
-ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
-ln -sf ~/dotfiles/.gitignore_global ~/.gitignore_global
-ln -sf ~/dotfiles/.globalrc ~/.globalrc
-ln -sf ~/dotfiles/.ideavimrc ~/.ideavimrc
-ln -sf ~/dotfiles/.profile ~/.profile
-ln -sf ~/dotfiles/.pryrc ~/.pryrc
-ln -sf ~/dotfiles/.vimrc.after ~/.vimrc.after
-ln -sf ~/dotfiles/.vimrc.before ~/.vimrc.before
-ln -sf ~/dotfiles/.zprofile ~/.zprofile
-ln -sf ~/dotfiles/.zshenv ~/.zshenv
-ln -sf ~/dotfiles/.zshrc ~/.zshrc
+ln -sf ~/dotfiles/alias ~/.alias
+ln -sf ~/dotfiles/bashrc ~/.bashrc
+ln -sf ~/dotfiles/bash_profile ~/.bash_profile
+ln -sf ~/dotfiles/ctags ~/.ctags
+ln -sf ~/dotfiles/gitconfig ~/.gitconfig
+ln -sf ~/dotfiles/gitignore_global ~/.gitignore_global
+ln -sf ~/dotfiles/globalrc ~/.globalrc
+ln -sf ~/dotfiles/ideavimrc ~/.ideavimrc
+ln -sf ~/dotfiles/profile ~/.profile
+ln -sf ~/dotfiles/pryrc ~/.pryrc
+ln -sf ~/dotfiles/vimrc ~/.vimrc
+ln -sf ~/dotfiles/vimrc.after ~/.vimrc.after
+ln -sf ~/dotfiles/vimrc.before ~/.vimrc.before
+ln -sf ~/dotfiles/zprofile ~/.zprofile
+ln -sf ~/dotfiles/zshenv ~/.zshenv
+ln -sf ~/dotfiles/zshrc ~/.zshrc
 
 # Emacs Doom
-ln -sf ~/dotfiles/.doom.d ~/.doom.d
+ln -sf ~/dotfiles/.doom.d ~/
 
 # Karabiner
 mkdir -p ~/.config/karabiner
