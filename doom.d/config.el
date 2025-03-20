@@ -235,6 +235,11 @@
          :map company-active-map
          ("C-h" . backward-delete-char)))
 
+(use-package! format-all
+  :commands (format-all-mode
+             format-all-region-or-buffer)
+  :bind (("M-F" . format-all-region-or-buffer)))
+
 ;;; Programming Languages
 
 ;; (use-package! lsp-mode
