@@ -54,37 +54,43 @@ I prefer the [OrbStack](http://orbstack.dev) over the vanila Docker Desktop.
 
 ### MySQL
 
-```shell
+```
 docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=true -d --restart always -p 3306:3306 mysql
 ```
 #### MySQL client
 
-```shell
+```
 brew install mysql-client
 brew link -f mysql-client
 ```
 
 ## Emacs
 
-```shell
-brew install --cask emacs
+Install emacs-plus, recommended for Doom.
+```
+brew tap d12frosted/emacs-plus
+brew install emacs-plus
+```
+
+Make alias to the /Applications folder
+```
+osascript -e 'tell application "Finder" to make alias file to posix file "/opt/homebrew/opt/emacs-plus/Emacs.app" at posix file "/Applications" with properties {name:"Emacs.app"}'
 ```
 
 ### Doom
 
-``` shell
+Install Doom dependencies
+```
+brew install coreutils markdown shellcheck fontconfig ripgrep fd
+```
+
+```
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 ```
 
-#### Doom dependencies
-
-```shell
-brew install coreutils markdown shellcheck fontconfig ripgrep 
-```
-
 ## Stats
 
-```shell
+```
 brew install --cask stats
 ```
