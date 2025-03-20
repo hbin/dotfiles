@@ -106,16 +106,26 @@
 
 ;;; Global settings
 
+;;; Unbinding keys
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-p"))      ; used to mark page
+(global-unset-key (kbd "C-x C-n"))      ; used to set-goal-column
+(global-unset-key (kbd "C-x 0"))        ; used to delete-window
+(global-unset-key (kbd "C-x 1"))        ; used to delete-other-windows
+(global-unset-key (kbd "C-x 2"))        ; used to split-window-vertically
+(global-unset-key (kbd "C-x 3"))        ; used to split-window-horizontally
+(global-unset-key (kbd "C-x C-l"))      ; used to lowercase the buffer/region
+(global-unset-key (kbd "s-n"))
+(global-unset-key (kbd "s-p"))
+
 (bind-key "<f1>" 'help-command)
-(bind-key "C-`" '+eshell/toggle)
 (bind-key "M-," 'doom/goto-private-config-file)
 
-(bind-key "s-0" 'balance-windows)
-(bind-key "M-0" 'delete-window)
-(bind-key "M-1" 'delete-other-windows)
-(bind-key "M-2" 'split-window-vertically)
-(bind-key "M-3" 'split-window-horizontally)
-(bind-key "M-k" 'kill-this-buffer)
+(bind-key  "C-`" '+eshell/toggle)
+(bind-key "C-x \\" 'align-regexp)
+
+(bind-key "C-o" '+default/newline-below)
+(bind-key "C-M-o" '+default/newline-above)
 
 (bind-key "C-h" '+default--delete-backward-char-a)
 (bind-key "C-w" '+default-backward-kill-word-or-region)
@@ -124,19 +134,23 @@
 (bind-key "C-/" 'undo-fu-only-undo)
 (bind-key "C-?" 'undo-fu-only-redo)
 
-(bind-key "C-o" '+default/newline-below)
-(bind-key "C-M-o" '+default/newline-above)
-
-(bind-key "M-g" '+default/search-project-for-symbol-at-point)
-
-(bind-key "M-t" 'projectile-find-file)
-(bind-key "M-e" 'projectile-recentf)
-
-(bind-key "C-x \\" 'align-regexp)
-
 (bind-key "M-h" 'er/expand-region)
 
-(bind-key "C-z" nil)
+;; Windows management
+(bind-key "s-0" 'balance-windows)
+(bind-key "M-0" 'delete-window)
+(bind-key "M-1" 'delete-other-windows)
+(bind-key "M-2" 'split-window-vertically)
+(bind-key "M-3" 'split-window-horizontally)
+
+;; Buffer management
+(bind-key "M-k" 'kill-current-buffer)
+(bind-key "C-x C-b" 'switch-to-buffer)
+
+;; Projectitle
+(bind-key "M-t" 'projectile-find-file)
+(bind-key "M-e" 'projectile-recentf)
+(bind-key "M-g" '+default/search-project-for-symbol-at-point)
 
 ;;; My Toolset
 
