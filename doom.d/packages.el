@@ -59,6 +59,7 @@
 (package! ruby-hash-syntax)
 (package! projectile-rails)
 (package! go-playground)
+(package! format-all)
 
 (package! dockerfile-mode :recipe
   (:host github :repo "spotify/dockerfile-mode"))
