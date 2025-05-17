@@ -15,7 +15,8 @@
                                     {
                                         "identifiers": [
                                             { "vendor_id": 1278 },
-                                            { "vendor_id": 1133 }
+                                            { "vendor_id": 1133 },
+                                            { "vendor_id": 2131 }
                                         ],
                                         "type": "device_if"
                                     }
@@ -37,7 +38,8 @@
                                     {
                                         "identifiers": [
                                             { "vendor_id": 1278 },
-                                            { "vendor_id": 1133 }
+                                            { "vendor_id": 1133 },
+                                            { "vendor_id": 2131 }
                                         ],
                                         "type": "device_if"
                                     }
