@@ -57,57 +57,18 @@ if [ -d "$HOME/.emacs.d" ]; then
 fi
 # }}}
 
-# nvm {{{
-export NVM_DIR=$HOME/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-# }}}
-
-# rbenv {{{
-export RBENV_ROOT=$HOME/.rbenv
-if [ -d "$RBENV_ROOT" ]; then
-    export PATH=$RBENV_ROOT/bin:$PATH
-    eval "$(rbenv init -)"
-fi
-export RUBY_YJIT_ENABLE=true
-# }}}
-
-# pyenv {{{
-export PYENV_ROOT=$HOME/.pyenv
-if [ -d "$PYENV_ROOT" ]; then
-    export PATH=$PYENV_ROOT/bin:$PATH
-    eval "$(pyenv init --path)"
-fi
-# }}}
-
-# goenv {{{
-export GOENV_DISABLE_GOPATH=1
-export GOENV_ROOT="$HOME/.goenv"
-if [ -d "$GOENV_ROOT" ]; then
-    export PATH=$GOENV_ROOT/bin:$PATH
-    export PATH=$GOENV_ROOT/shims:$PATH
-    eval "$(goenv init -)"
-
-    export GOROOT=$GOENV_ROOT/versions/$(goenv version-name)
-else
-    export GOROOT="$(brew --prefix golang)/libexec"
+# Mise
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
 fi
 
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
-
-# export GOBIN=$GOPATH/bin
-# export PATH=$PATH:$GOBIN
+# Go
+if [ -d "$HOME/go" ]; then
+  export GOPATH=$HOME/go
+  export PATH=$GOPATH/bin:$PATH
+fi
 
 export GO111MODULE=auto
-# }}}
-
-# exenv {{{
-# export EXENV_ROOT="$HOME/.exenv"
-# if [ -d "$EXENV_ROOT" ]; then
-#     export PATH=$EXENV_ROOT/bin:$PATH
-#     eval "$(exenv init -)"
-# fi
 # }}}
 
 export TERM=xterm-256color
