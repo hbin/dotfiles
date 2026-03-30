@@ -92,10 +92,8 @@ dns:
   direct-nameserver-follow-policy: false
 
   nameserver-policy:
-    "geosite:cn,apple":
-      - https://dns.alidns.com/dns-query
-    "geosite:geolocation-!cn":
-      - tls://8.8.8.8
+    "geosite:cn,apple": https://dns.alidns.com/dns-query
+    "geosite:geolocation-!cn": tls://8.8.8.8
   nameserver:
     - https://dns.alidns.com/dns-query
 
