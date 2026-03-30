@@ -316,7 +316,6 @@ rules:
 
   # Domestic
   - GEOSITE,private,DIRECT
-  - GEOSITE,cn,DIRECT
 
   # Network Time Protocol
   - GEOSITE,category-ntp,DIRECT
@@ -356,6 +355,8 @@ rules:
   - GEOSITE,category-games-!cn,Game
 
   - GEOSITE,gfw,选择代理
+  - GEOSITE,cn,DIRECT
+
   - GEOIP,cn,DIRECT,no-resolve
   - DST-PORT,22,SSH(22端口)
   - MATCH,选择代理
