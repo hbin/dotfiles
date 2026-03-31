@@ -1,30 +1,18 @@
+# Basic configuration
 mixed-port: 7890
-redir-port: 7892
-tproxy-port: 7893
-routing-mark: 7894
-
-ipv6: false
-
-allow-lan: true
-
-# rule / global / direct
 mode: rule
-
-# silent / info / warning / error / debug
-log-level: info
-
-#  TCP keep alive interval
-disable-keep-alive: false
-keep-alive-idle: 600
-keep-alive-interval: 30
+allow-lan: true
+unified-delay: true
+tcp-concurrent: true
 
 profile:
   store-selected: true
   store-fake-ip: true
 
-unified-delay: true
-tcp-concurrent: true
-find-process-mode: off
+# TCP keep alive interval
+disable-keep-alive: false
+keep-alive-idle: 600
+keep-alive-interval: 30
 
 # GEO Data
 geodata-mode: true
@@ -45,33 +33,43 @@ geox-url:
 # external-ui-name: zashboard
 # external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
-# TUN
 tun:
   enable: true
   stack: system
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
+  disable-icmp-forwarding: true # https://linux.do/t/topic/1460117#p-12575152-icmp-3
   dns-hijack: [any:53, "tcp://any:53"]
 
 sniffer:
   enable: true
   sniff:
-    HTTP:
-      ports: [80, 8080-8880]
-      override-destination: true
-    TLS:
-      ports: [443, 8443]
-    QUIC:
-      ports: [443, 8443]
+    TLS: {ports: [443], override-destination: true}
+    HTTP: {ports: [443], override-destination: true}
   skip-domain:
     - "Mijia Cloud"
+    - dlg.io.mi.com
     - "+.push.apple.com"
+  parse-pure-ip: false
+  force-dns-mapping: true
+  override-destination: true
 
 dns:
-  enable: true
   ipv6: false
+  enable: true
+  listen: 0.0.0.0:1053
+  prefer-h3: false
+  use-hosts: false
   cache-algorithm: arc
+
+  default-nameserver:
+    - 223.5.5.5
+  nameserver-policy:
+    "geosite:private,cn,apple": 223.5.5.5
+    "geosite:geolocation-!cn": 8.8.8.8
+  nameserver:
+    - 223.5.5.5
 
   # Fake IP
   enhanced-mode: fake-ip
@@ -85,6 +83,15 @@ dns:
     # NTP server
     - "geosite:category-ntp"
 
+    # Apple
+    - "geosite:apple"
+
+    # Stun
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - +.stun.*.*.*.*.*
+
     # Nintendo Switch
     - '*.n.n.srv.nintendo.net'
 
@@ -94,33 +101,6 @@ dns:
     # XBox
     - 'xbox.*.*.microsoft.com'
     - '*.*.xboxlive.com'
-
-    # Apple
-    - '+.push.apple.com'
-
-    # Docker
-    - '+.docker.io'
-
-  default-nameserver:
-    - https://223.5.5.5/dns-query
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  direct-nameserver:
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
-  direct-nameserver-follow-policy: false
-
-  nameserver-policy:
-    "geosite:cn,apple":
-      - https://dns.alidns.com/dns-query
-      - https://doh.pub/dns-query
-    "geosite:geolocation-!cn":
-      - tls://8.8.8.8
-      - tls://1.1.1.1
-  nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
 
 ###########################################
 
@@ -155,7 +135,7 @@ proxy-groups:
       - 美国节点
     interval: 300
     tolerance: 20
-    lazy: false
+    lazy: true
   - name: 静态资源
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Cloudflare.png
     type: select
@@ -166,7 +146,6 @@ proxy-groups:
       - 新加坡节点
       - 日本节点
       - 美国节点
-      - 低倍率节点
       - 手动选择
       - DIRECT
   - name: AI
@@ -220,12 +199,6 @@ proxy-groups:
       - REJECT
       - REJECT-DROP
       - DIRECT
-  - name: 低倍率节点
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Lab.png
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    include-all: true
-    filter: (?i)0.[0-5]|低倍率|省流|大流量|实验性
   - name: 香港节点
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
     include-all: true
@@ -235,7 +208,7 @@ proxy-groups:
     url: https://cp.cloudflare.com/generate_204
     interval: 300
     tolerance: 20
-    lazy: false
+    lazy: true
   - name: 台湾节点
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
     include-all: true
@@ -285,7 +258,6 @@ proxy-groups:
       - 手动选择
       - 故障转移
       - DIRECT
-      - 低倍率节点
       - 香港节点
       - 台湾节点
       - 新加坡节点
@@ -297,9 +269,9 @@ rule-providers:
     type: http
     behavior: domain
     format: yaml
+    interval: 86400
     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
     path: ./ruleset/reject.yaml
-    interval: 86400
 
   steamfix:
     type: http
@@ -312,51 +284,28 @@ rule-providers:
 rules:
   - RULE-SET,reject,广告拦截
   - RULE-SET,steamfix,DIRECT
-  - DOMAIN,fonts.googleapis.com,REJECT
 
-  # Domestic
   - GEOSITE,private,DIRECT
-
-  # Network Time Protocol
   - GEOSITE,category-ntp,DIRECT
-
-  # Apple
   - GEOSITE,apple,DIRECT
-
-  # AI
   - GEOSITE,category-ai-!cn,AI
-
-  # Google
   - GEOSITE,youtube,YouTube
   - GEOSITE,google,Google
-
-  # Social Media: X, Instagram, Facebook, etc
   - GEOSITE,category-social-media-!cn,Social Media
-
-  # Microsoft
   - GEOSITE,onedrive,DIRECT
   - GEOSITE,microsoft,Microsoft
-
-  # Netflix
   - GEOSITE,netflix,Netflix
-  - GEOIP,netflix,Netflix,no-resolve
-
-  # Spotify
   - GEOSITE,spotify,Spotify
-
-  # Telegram
   - GEOSITE,telegram,Telegram
-  - GEOIP,telegram,Telegram,no-resolve
-
-  # Tiktok
   - GEOSITE,tiktok@!cn,TikTok
-
-  # Game
   - GEOSITE,category-games-!cn,Game
 
   - GEOSITE,gfw,选择代理
   - GEOSITE,cn,DIRECT
 
+  - GEOIP,netflix,Netflix,no-resolve
+  - GEOIP,telegram,Telegram,no-resolve
   - GEOIP,cn,DIRECT,no-resolve
+
   - DST-PORT,22,SSH(22端口)
   - MATCH,选择代理
