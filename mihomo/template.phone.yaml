@@ -15,9 +15,9 @@ keep-alive-interval: 15
 
 # GEO Data
 geodata-mode: true
-geodata-loader: standard
+geodata-loader: memconservative
 geo-auto-update: true
-geo-update-interval: 48 # by hours
+geo-update-interval: 168 # by hours
 
 geox-url:
   geoip: https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
@@ -126,6 +126,10 @@ proxy-groups:
       - 美国节点
       - 手动选择
       - DIRECT
+  - name: 大富翁游戏
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Puzzle.png
+    type: select
+    proxies: *a1
   - name: AI
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
     type: select
@@ -170,13 +174,6 @@ proxy-groups:
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png
     type: select
     proxies: *a1
-  - name: 广告拦截
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png
-    type: select
-    proxies:
-      - REJECT
-      - REJECT-DROP
-      - DIRECT
   - name: 香港节点
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
     include-all: true
@@ -243,25 +240,25 @@ proxy-groups:
       - 美国节点
 
 rule-providers:
-  reject:
+  brokers:
     type: http
-    behavior: domain
+    behavior: classical
     format: yaml
-    interval: 86400
-    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
-    path: ./ruleset/reject.yaml
+    url: https://cdn.jsdelivr.net/gh/hbin/dotfiles@master/mihomo/ruleset/brokers.yaml
+    path: ./ruleset/brokers.yaml
+    interval: 604800
 
   steamfix:
     type: http
     behavior: domain
     format: yaml
-    interval: 604800
     url: https://cdn.jsdelivr.net/gh/hbin/dotfiles@master/mihomo/ruleset/steamfix.yaml
     path: ./ruleset/steamfix.yaml
+    interval: 604800
 
 rules:
-  - RULE-SET,reject,广告拦截
   - RULE-SET,steamfix,DIRECT
+  - RULE-SET,brokers,大富翁游戏
 
   - GEOSITE,private,DIRECT
   - GEOSITE,category-ntp,DIRECT
