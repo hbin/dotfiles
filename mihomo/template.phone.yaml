@@ -1,8 +1,10 @@
 # Basic configuration
 mixed-port: 7890
 mode: rule
+ipv6: false
 unified-delay: true
 tcp-concurrent: true
+log-level: info
 
 profile:
   store-selected: true
@@ -25,44 +27,33 @@ geox-url:
   mmdb: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
   asn: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
 
-# tun:
-#   enable: true
-#   stack: system
-#   auto-route: true
-#   auto-redirect: true
-#   auto-detect-interface: true
-#   disable-icmp-forwarding: true
-#   dns-hijack: [any:53]
-
 dns:
-  ipv6: false
   enable: true
+  ipv6: false
   prefer-h3: false
-  use-hosts: false
-  cache-algorithm: lru
+  cache-algorithm: arc
 
   default-nameserver:
     - 223.5.5.5
   nameserver-policy:
-    "geosite:cn,apple": 223.5.5.5
+    "geosite:cn,private,apple,connectivity-check,category-ntp": 223.5.5.5
     "geosite:geolocation-!cn": 8.8.8.8
   nameserver:
-    - 223.5.5.5
+    - 8.8.8.8
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
 
   # Fake IP
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - "geosite:connectivity-check"
-    - "geosite:private"
     - "geosite:cn"
-
-    # NTP server
-    - "geosite:category-ntp"
-
-    # Apple
+    - "geosite:private"
     - "geosite:apple"
+    - "geosite:category-ntp"
+    - "geosite:connectivity-check"
 
     # Stun
     - +.stun.*.*
