@@ -15,7 +15,7 @@ profile:
 # TCP keep alive interval
 disable-keep-alive: false
 keep-alive-idle: 600
-keep-alive-interval: 30
+keep-alive-interval: 15
 
 # GEO Data
 geodata-mode: true
@@ -175,10 +175,6 @@ proxy-groups:
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
     type: select
     proxies: *a1
-  - name: YouTube
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
-    type: select
-    proxies: *a1
   - name: Netflix
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
     type: select
@@ -201,10 +197,6 @@ proxy-groups:
     proxies: *a1
   - name: Game
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
-    type: select
-    proxies: *a1
-  - name: SSH(22端口)
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png
     type: select
     proxies: *a1
   - name: 香港节点
@@ -281,23 +273,40 @@ rule-providers:
     path: ./ruleset/brokers.yaml
     interval: 604800
 
-  steamfix:
+  steam:
     type: http
-    behavior: domain
+    behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/hbin/dotfiles@master/mihomo/ruleset/steamfix.yaml
-    path: ./ruleset/steamfix.yaml
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml
+    path: ./ruleset/steam.yaml
+    interval: 604800
+
+  steamcn:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/SteamCN/SteamCN.yaml
+    path: ./ruleset/steamcn.yaml
+    interval: 604800
+
+  wechat:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/WeChat/WeChat.yaml
+    path: ./ruleset/wechat.yaml
     interval: 604800
 
 rules:
-  - RULE-SET,steamfix,DIRECT
   - RULE-SET,brokers,大富翁游戏
+  - RULE-SET,wechat,DIRECT
+  - RULE-SET,steam,Game
+  - RULE-SET,steamcn,DIRECT
 
   - GEOSITE,private,DIRECT
   - GEOSITE,category-ntp,DIRECT
   - GEOSITE,apple,DIRECT
   - GEOSITE,category-ai-!cn,AI
-  - GEOSITE,youtube,YouTube
   - GEOSITE,google,Google
   - GEOSITE,category-social-media-!cn,Social Media
   - GEOSITE,onedrive,DIRECT
@@ -315,5 +324,4 @@ rules:
   - GEOIP,telegram,Telegram,no-resolve
   - GEOIP,cn,DIRECT,no-resolve
 
-  - DST-PORT,22,SSH(22端口)
   - MATCH,选择代理
