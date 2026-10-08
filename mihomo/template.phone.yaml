@@ -1,23 +1,36 @@
-# Basic configuration
+# =========================================================
+# Mihomo - Mobile
+# =========================================================
+
 mixed-port: 7890
 mode: rule
+
+allow-lan: false
+bind-address: 127.0.0.1
+
 ipv6: false
 unified-delay: true
-tcp-concurrent: true
+tcp-concurrent: false
 log-level: info
 
 profile:
   store-selected: true
   store-fake-ip: true
 
-# TCP keep alive interval
-disable-keep-alive: false
-keep-alive-idle: 300
-keep-alive-interval: 15
+# ---------------------------------------------------------
+# TCP Keep Alive
+# ---------------------------------------------------------
 
+disable-keep-alive: false
+keep-alive-idle: 600
+keep-alive-interval: 60
+
+# ---------------------------------------------------------
 # GEO Data
+# ---------------------------------------------------------
+
 geodata-mode: true
-geodata-loader: memconservative
+geodata-loader: standard
 geo-auto-update: true
 geo-update-interval: 168 # by hours
 
@@ -27,55 +40,95 @@ geox-url:
   mmdb: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
   asn: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
 
+# ---------------------------------------------------------
+# DNS
+# ---------------------------------------------------------
+
 dns:
   enable: true
   ipv6: false
-  prefer-h3: false
+
   cache-algorithm: arc
+  prefer-h3: false
 
-  default-nameserver:
-    - 223.5.5.5
-  nameserver-policy:
-    "geosite:cn,private,apple,connectivity-check,category-ntp": 223.5.5.5
-    "geosite:geolocation-!cn": 8.8.8.8
-  nameserver:
-    - 8.8.8.8
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-
-  # Fake IP
+  # Fake-IP
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
+
   fake-ip-filter:
-    - "geosite:cn"
-    - "geosite:private"
-    - "geosite:apple"
-    - "geosite:category-ntp"
-    - "geosite:connectivity-check"
+    # NTP / 时间同步
+    - '*.time.edu.cn'
+    - '*.ntp.org.cn'
+    - 'time.*.com'
+    - 'time.*.gov'
 
-    # Stun
-    - +.stun.*.*
-    - +.stun.*.*.*
-    - +.stun.*.*.*.*
-    - +.stun.*.*.*.*.*
+    # 局域网
+    - '*.lan'
+    - '*.local'
 
-    # Nintendo Switch
+    # STUN / P2P / 游戏
+    - '+.stun.*.*'
+    - '+.stun.*.*.*'
+    - '+.stun.*.*.*.*'
+    - '+.stun.*.*.*.*.*'
     - '*.n.n.srv.nintendo.net'
-
-    # PlayStation
     - '+.stun.playstation.net'
-
-    # XBox
     - 'xbox.*.*.microsoft.com'
     - '*.*.xboxlive.com'
 
-###########################################
+    # 国内 / Private / Apple / Microsoft
+    - 'geosite:cn,private,apple,microsoft'
+
+  # -------------------------------------------------------
+  # DNS Server bootstrap
+  # -------------------------------------------------------
+
+  # 用于解析 DNS 服务器域名
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+  nameserver-policy:
+    "geosite:cn,private,apple,microsoft": 223.5.5.5
+    "geosite:gfw": 8.8.8.8
+
+  nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+
+  # 专门用于解析代理节点服务器域名
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+# =========================================================
+# Proxies
+# =========================================================
 
 proxies:
 
+# =========================================================
+# Proxy Groups
+# =========================================================
+
+anchors:
+  base: &proxy_base
+    - 选择代理
+    - 香港节点
+    - 台湾节点
+    - 新加坡节点
+    - 日本节点
+    - 美国节点
+    - 手动选择
+    - DIRECT
+
 proxy-groups:
+
+  # -------------------------------------------------------
+  # 主代理
+  # -------------------------------------------------------
+
   - name: 选择代理
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
     type: select
@@ -88,148 +141,188 @@ proxy-groups:
       - 美国节点
       - 手动选择
       - DIRECT
+
+  # -------------------------------------------------------
+  # 手动节点
+  # -------------------------------------------------------
+
   - name: 手动选择
     icon: https://gcore.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/select.png
-    include-all: true
     type: select
+    include-all: true
+
+  # -------------------------------------------------------
+  # 自动故障转移
+  # -------------------------------------------------------
+
   - name: 故障转移
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Bypass.png
     type: fallback
+
     url: https://cp.cloudflare.com/generate_204
+    interval: 600
+    timeout: 5000
+    max-failed-times: 3
+    lazy: true
+
     proxies:
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-    interval: 600
-    tolerance: 20
-    lazy: true
-  - name: 静态资源
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Cloudflare.png
-    type: select
-    proxies: &a1
-      - 选择代理
-      - 香港节点
-      - 台湾节点
-      - 新加坡节点
-      - 日本节点
-      - 美国节点
-      - 手动选择
-      - DIRECT
-  - name: 大富翁游戏
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Puzzle.png
-    type: select
-    proxies: *a1
-  - name: AI
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
-    type: select
-    proxies: *a1
-  - name: Microsoft
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
-    type: select
-    proxies: *a1
-  - name: Google
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
-    type: select
-    proxies: *a1
-  - name: Netflix
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
-    type: select
-    proxies: *a1
-  - name: TikTok
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
-    type: select
-    proxies: *a1
-  - name: Spotify
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png
-    type: select
-    proxies: *a1
-  - name: Telegram
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
-    type: select
-    proxies: *a1
-  - name: Social Media
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/World_Map.png
-    type: select
-    proxies: *a1
-  - name: Game
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
-    type: select
-    proxies: *a1
-  - name: 香港节点
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
-    include-all: true
-    filter: (?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰
-    exclude-filter: 0\.[0-5]|低倍率|省流|大流量|实验性
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 600
-    tolerance: 20
-    lazy: true
-  - name: 台湾节点
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
-    include-all: true
-    filter: (?i)台|新北|彰化|TW|Taiwan|🇹🇼
-    exclude-filter: 0\.[0-5]|低倍率|省流|大流量|实验性
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 600
-    tolerance: 20
-    lazy: true
-  - name: 新加坡节点
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
-    include-all: true
-    filter: (?i)新加坡|坡|狮城|SG|Singapore|🇸🇬
-    exclude-filter: 0\.[0-5]|低倍率|省流|大流量|实验性
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 600
-    tolerance: 20
-    lazy: true
-  - name: 日本节点
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
-    include-all: true
-    filter: (?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵
-    exclude-filter: 0\.[0-5]|低倍率|省流|大流量|实验性
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 600
-    tolerance: 20
-    lazy: true
-  - name: 美国节点
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
-    include-all: true
-    filter: (?i)美国|美|US|United States|🇺🇸
-    exclude-filter: 0\.[0-5]|低倍率|省流|大流量|实验性
-    type: url-test
-    url: https://cp.cloudflare.com/generate_204
-    interval: 600
-    tolerance: 20
-    lazy: true
-  - name: GLOBAL
-    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
-    include-all: true
-    type: select
-    proxies:
-      - 选择代理
-      - 手动选择
-      - 故障转移
-      - DIRECT
       - 香港节点
       - 台湾节点
       - 新加坡节点
       - 日本节点
       - 美国节点
 
+  # -------------------------------------------------------
+  # 功能组
+  # -------------------------------------------------------
+
+  - name: 大富翁游戏
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Puzzle.png
+    type: select
+    proxies: *proxy_base
+
+  - name: AI
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Developer
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Microsoft
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Google
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Netflix
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
+    type: select
+    proxies: *proxy_base
+
+  - name: TikTok
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Spotify
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Telegram
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Social Media
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/World_Map.png
+    type: select
+    proxies: *proxy_base
+
+  - name: Game
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
+    type: select
+    proxies: *proxy_base
+
+  # =======================================================
+  # 地区节点
+  # =======================================================
+
+  - name: 香港节点
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
+    type: url-test
+
+    include-all: true
+
+    filter: '(?i)香港|港|HK|Hong Kong|HongKong|hongkong|🇭🇰'
+    exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
+
+    url: https://cp.cloudflare.com/generate_204
+    interval: 600
+    timeout: 5000
+    tolerance: 20
+    lazy: true
+
+  - name: 台湾节点
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
+    type: url-test
+
+    include-all: true
+
+    filter: '(?i)台湾|台|新北|彰化|TW|Taiwan|🇹🇼'
+    exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
+
+    url: https://cp.cloudflare.com/generate_204
+    interval: 600
+    timeout: 5000
+    tolerance: 20
+    lazy: true
+
+  - name: 新加坡节点
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
+    type: url-test
+
+    include-all: true
+
+    filter: '(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬'
+    exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
+
+    url: https://cp.cloudflare.com/generate_204
+    interval: 600
+    timeout: 5000
+    tolerance: 20
+    lazy: true
+
+  - name: 日本节点
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
+    type: url-test
+
+    include-all: true
+
+    filter: '(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵'
+    exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
+
+    url: https://cp.cloudflare.com/generate_204
+    interval: 600
+    timeout: 5000
+    tolerance: 20
+    lazy: true
+
+  - name: 美国节点
+    icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
+    type: url-test
+
+    include-all: true
+
+    filter: '(?i)美国|美|US|United States|🇺🇸'
+    exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
+
+    url: https://cp.cloudflare.com/generate_204
+    interval: 600
+    timeout: 5000
+    tolerance: 20
+    lazy: true
+
+# =========================================================
+# Rule Providers
+# =========================================================
+
 rule-providers:
+
   brokers:
     type: http
     behavior: classical
     format: yaml
     url: https://cdn.jsdelivr.net/gh/hbin/dotfiles@master/mihomo/ruleset/brokers.yaml
     path: ./ruleset/brokers.yaml
-    interval: 604800
+    interval: 86400
 
   steam:
     type: http
@@ -255,19 +348,58 @@ rule-providers:
     path: ./ruleset/wechat.yaml
     interval: 604800
 
+  ai:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/VPSDance/ai-proxy-rules@main/rules/clash/global.yaml
+    path: ./ruleset/ai.yaml
+    interval: 86400
+
+# =========================================================
+# Rules
+# =========================================================
+
 rules:
+
+  # -------------------------------------------------------
+  # LAN
+  # -------------------------------------------------------
+
+  - GEOIP,lan,DIRECT,no-resolve
+  - GEOSITE,private,DIRECT
+
+  # -------------------------------------------------------
+  # NTP
+  # -------------------------------------------------------
+
+  - GEOSITE,category-ntp,选择代理
+
+  # -------------------------------------------------------
+  # Custom Rule Providers
+  # -------------------------------------------------------
+
   - RULE-SET,brokers,大富翁游戏
   - RULE-SET,wechat,DIRECT
   - RULE-SET,steam,Game
   - RULE-SET,steamcn,DIRECT
+  - RULE-SET,ai,AI
 
-  - GEOSITE,private,DIRECT
-  - GEOSITE,category-ntp,DIRECT
-  - GEOSITE,apple,DIRECT
+  # -------------------------------------------------------
+  # 基础国内服务
+  # -------------------------------------------------------
+
+  - GEOSITE,apple-cn,DIRECT
+  - GEOSITE,cn,DIRECT
+
+  # -------------------------------------------------------
+  # 指定服务
+  # -------------------------------------------------------
+
   - GEOSITE,category-ai-!cn,AI
+  - GEOSITE,github,Developer
   - GEOSITE,google,Google
   - GEOSITE,category-social-media-!cn,Social Media
-  - GEOSITE,onedrive,DIRECT
   - GEOSITE,microsoft,Microsoft
   - GEOSITE,netflix,Netflix
   - GEOSITE,spotify,Spotify
@@ -275,11 +407,25 @@ rules:
   - GEOSITE,tiktok@!cn,TikTok
   - GEOSITE,category-games-!cn,Game
 
-  - GEOSITE,gfw,选择代理
-  - GEOSITE,cn,DIRECT
+  # -------------------------------------------------------
+  # IP 加速规则
+  # -------------------------------------------------------
 
   - GEOIP,netflix,Netflix,no-resolve
   - GEOIP,telegram,Telegram,no-resolve
+
+  # 国内 IP 直连
   - GEOIP,cn,DIRECT,no-resolve
+
+  # -------------------------------------------------------
+  # GFW
+  # -------------------------------------------------------
+
+  - GEOSITE,gfw,选择代理
+  - GEOSITE,geolocation-!cn,选择代理
+
+  # -------------------------------------------------------
+  # MATCH
+  # -------------------------------------------------------
 
   - MATCH,选择代理
