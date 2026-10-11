@@ -407,7 +407,10 @@ rules:
   - GEOIP,netflix,Netflix,no-resolve
   - GEOIP,telegram,Telegram,no-resolve
 
-  # GFW
+  # Apple 中国域名需先于 geolocation-!cn
+  - GEOSITE,apple-cn,DIRECT
+
+  # 非中国域名代理
   - GEOSITE,geolocation-!cn,选择代理
 
   # 国内 IP 直连

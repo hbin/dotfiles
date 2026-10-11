@@ -7,6 +7,8 @@ mode: rule
 
 allow-lan: true
 bind-address: "*"
+lan-allowed-ips:
+  - 192.168.31.0/24
 
 ipv6: false
 unified-delay: true
@@ -123,7 +125,7 @@ dns:
     'geosite:cn,private,apple,microsoft':
       - 223.5.5.5
       - 119.29.29.29
-    'geosite:gfw':
+    'geosite:geolocation-!cn':
       - 8.8.8.8
       - 1.1.1.1
 
@@ -442,12 +444,13 @@ rules:
   - GEOIP,netflix,Netflix,no-resolve
   - GEOIP,telegram,Telegram,no-resolve
 
-  # GFW
-  - GEOSITE,gfw,选择代理
+  # Apple 中国域名需先于 geolocation-!cn
+  - GEOSITE,apple-cn,DIRECT
+
+  # 非中国域名代理
   - GEOSITE,geolocation-!cn,选择代理
 
   # 国内 IP 直连
-  - GEOSITE,apple-cn,DIRECT
   - GEOSITE,cn,DIRECT
   - GEOIP,cn,DIRECT,no-resolve
 
