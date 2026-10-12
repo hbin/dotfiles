@@ -449,7 +449,7 @@ rules:
   - GEOIP,telegram,Telegram,no-resolve
 
   # Apple 中国域名需先于 geolocation-!cn
-  - GEOSITE,apple-cn,DIRECT
+  - GEOSITE,apple@cn,DIRECT
 
   # 非中国域名代理
   - GEOSITE,geolocation-!cn,选择代理
