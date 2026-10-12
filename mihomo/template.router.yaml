@@ -4,6 +4,7 @@
 
 mixed-port: 7890
 mode: rule
+find-process-mode: "off"
 
 allow-lan: true
 bind-address: "*"
@@ -40,7 +41,6 @@ geox-url:
   geoip: https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
   geosite: https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
   mmdb: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
-  asn: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
 
 # =========================================================
 # TUN
@@ -82,6 +82,9 @@ dns:
 
   cache-algorithm: arc
   prefer-h3: false
+
+  # 让 nameserver / fallback / nameserver-policy 的连接遵守 rules（需 proxy-server-nameserver 非空）
+  respect-rules: true
 
   # Fake-IP
   enhanced-mode: fake-ip
@@ -126,13 +129,13 @@ dns:
       - 223.5.5.5
       - 119.29.29.29
     'geosite:geolocation-!cn':
-      - 8.8.8.8
-      - 1.1.1.1
+      - https://1.1.1.1/dns-query
+      - https://8.8.8.8/dns-query
 
   # 默认 DNS
   nameserver:
-    - 8.8.8.8
-    - 1.1.1.1
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
 
   # 专门用于解析代理节点服务器域名
   proxy-server-nameserver:
@@ -410,7 +413,7 @@ rules:
   # NTP
   # -------------------------------------------------------
   - GEOSITE,category-ntp-cn,DIRECT
-  - GEOSITE,category-ntp,选择代理
+  - GEOSITE,category-ntp,DIRECT
 
   # -------------------------------------------------------
   # Custom Rule Providers
@@ -418,8 +421,8 @@ rules:
 
   - RULE-SET,brokers,大富翁游戏
   - RULE-SET,wechat,DIRECT
-  - RULE-SET,steam,Game
   - RULE-SET,steamcn,DIRECT
+  - RULE-SET,steam,Game
   - RULE-SET,ai,AI
 
   # -------------------------------------------------------
@@ -430,6 +433,7 @@ rules:
   - GEOSITE,github,Developer
   - GEOSITE,google,Google
   - GEOSITE,category-social-media-!cn,Social Media
+  - GEOSITE,microsoft@cn,DIRECT
   - GEOSITE,microsoft,Microsoft
   - GEOSITE,netflix,Netflix
   - GEOSITE,spotify,Spotify

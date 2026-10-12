@@ -21,9 +21,8 @@ profile:
 # TCP Keep Alive
 # ---------------------------------------------------------
 
-disable-keep-alive: false
-keep-alive-idle: 600
-keep-alive-interval: 60
+# Android 端会强制开启 keep-alive，显式声明以与实际行为一致
+disable-keep-alive: true
 
 # ---------------------------------------------------------
 # GEO Data
@@ -38,7 +37,22 @@ geox-url:
   geoip: https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
   geosite: https://gcore.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
   mmdb: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
-  asn: https://gcore.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb
+
+# =========================================================
+# Sniffer
+# =========================================================
+
+sniffer:
+  enable: true
+  sniff:
+    TLS: {ports: [443], override-destination: true}
+    HTTP: {ports: [80, 8080-8880], override-destination: true}
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+  parse-pure-ip: true
+  force-dns-mapping: true
+  override-destination: true
 
 # ---------------------------------------------------------
 # DNS
@@ -50,6 +64,9 @@ dns:
 
   cache-algorithm: arc
   prefer-h3: false
+
+  # 让 nameserver / fallback / nameserver-policy 的连接遵守 rules（需 proxy-server-nameserver 非空）
+  respect-rules: true
 
   # Fake-IP
   enhanced-mode: fake-ip
@@ -91,11 +108,11 @@ dns:
 
   nameserver-policy:
     "geosite:cn,private,apple,microsoft": 223.5.5.5
-    "geosite:geolocation-!cn": 8.8.8.8
+    "geosite:geolocation-!cn": https://1.1.1.1/dns-query
 
   nameserver:
-    - 8.8.8.8
-    - 1.1.1.1
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
 
   # 专门用于解析代理节点服务器域名
   proxy-server-nameserver:
@@ -373,7 +390,7 @@ rules:
   # NTP
   # -------------------------------------------------------
   - GEOSITE,category-ntp-cn,DIRECT
-  - GEOSITE,category-ntp,选择代理
+  - GEOSITE,category-ntp,DIRECT
 
   # -------------------------------------------------------
   # Custom Rule Providers
@@ -381,8 +398,8 @@ rules:
 
   - RULE-SET,brokers,大富翁游戏
   - RULE-SET,wechat,DIRECT
-  - RULE-SET,steam,Game
   - RULE-SET,steamcn,DIRECT
+  - RULE-SET,steam,Game
   - RULE-SET,ai,AI
 
   # -------------------------------------------------------
@@ -393,6 +410,7 @@ rules:
   - GEOSITE,github,Developer
   - GEOSITE,google,Google
   - GEOSITE,category-social-media-!cn,Social Media
+  - GEOSITE,microsoft@cn,DIRECT
   - GEOSITE,microsoft,Microsoft
   - GEOSITE,netflix,Netflix
   - GEOSITE,spotify,Spotify
@@ -408,7 +426,7 @@ rules:
   - GEOIP,telegram,Telegram,no-resolve
 
   # Apple 中国域名需先于 geolocation-!cn
-  - GEOSITE,apple-cn,DIRECT
+  - GEOSITE,apple@cn,DIRECT
 
   # 非中国域名代理
   - GEOSITE,geolocation-!cn,选择代理
