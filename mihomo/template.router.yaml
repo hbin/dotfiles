@@ -129,13 +129,13 @@ dns:
       - 223.5.5.5
       - 119.29.29.29
     'geosite:geolocation-!cn':
-      - https://1.1.1.1/dns-query
       - https://8.8.8.8/dns-query
+      - https://208.67.222.222/dns-query # OpenDNS
 
   # 默认 DNS
   nameserver:
-    - https://1.1.1.1/dns-query
     - https://8.8.8.8/dns-query
+    - https://208.67.222.222/dns-query # OpenDNS
 
   # 专门用于解析代理节点服务器域名
   proxy-server-nameserver:
