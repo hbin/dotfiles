@@ -10,37 +10,6 @@ ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="robbyrussell"
 ZSH_THEME="gentoo"
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Uncomment this to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how often before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=30
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want to disable command autocorrection
-# DISABLE_CORRECTION="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment following line if you want to disable marking untracked files under
-# VCS as dirty. This makes repository status check for large repositories much,
-# much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment following line if you want to  shown in the command execution time stamp
-# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
-# yyyy-mm-dd
-# HIST_STAMPS="mm/dd/yyyy"
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -52,8 +21,8 @@ source $ZSH/oh-my-zsh.sh
 export PATH=$HOME/.local/bin:$PATH
 
 # Emacs doom {{{
-if [ -d "$HOME/.emacs.d" ]; then
-    export PATH=$HOME/.emacs.d/bin:$PATH
+if [ -d "$HOME/.config/emacs/bin" ]; then
+    export PATH="$HOME/.config/emacs/bin:$PATH"
 fi
 # }}}
 
@@ -62,31 +31,31 @@ if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
 
+# Rust
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
+
 # Go
 if [ -d "$HOME/go" ]; then
   export GOPATH=$HOME/go
   export PATH=$GOPATH/bin:$PATH
 fi
 
-export GO111MODULE=auto
-# }}}
+# Ctrl+D refused ("use 'exit' to exit"); 10 consecutive EOFs force exit
+# (bash IGNOREEOF=42: exits on the 43rd; zsh ignores the IGNOREEOF variable)
+setopt ignore_eof
 
-export TERM=xterm-256color
+[ -n "$TMUX" ] || export TERM=xterm-256color
 export ALTERNATE_EDITOR=""
 
-export EDITOR='vim'
+# Preferred editor: nvim with vim fallback
+if command -v nvim >/dev/null 2>&1; then
+    export EDITOR='nvim'
+else
+    export EDITOR='vim'
+fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/id_rsa"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
 # include .alias if it exists
 if [ -f "$HOME/.alias" ]; then
     . "$HOME/.alias"
@@ -96,3 +65,7 @@ fi
 if [ -f "$HOME/.zshrc.local" ]; then
     . "$HOME/.zshrc.local"
 fi
+
+# Collapse duplicate PATH entries added both here and by mise's activation
+typeset -U path
+path=($path)
