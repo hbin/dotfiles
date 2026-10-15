@@ -1,113 +1,83 @@
 # Dotfiles
 
-This is a collection of my dot files and setups.
+My personal dotfiles, shared between macOS and Linux. Shell (bash + zsh),
+Git, Vim, Emacs Doom, Karabiner, and proxy config templates.
 
-## Homebrew
+## Quick Start
 
-``` shell
+On a fresh machine, run these in order.
+
+### 1. Homebrew (optional)
+
+Works on macOS and Linux.
+
+```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Dotfiles
+### 2. Clone and link
 
 ```shell
 git clone https://github.com/hbin/dotfiles.git ~/dotfiles
 ~/dotfiles/scripts/stow
 ```
-## oh-my-zsh
+
+The `stow` script symlinks everything into `$HOME` (it is plain
+`ln -sf`, no GNU stow required).
+
+### 3. oh-my-zsh + autosuggestions
 
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-### zsh autosuggestions
-
-```shell
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
-## [Mise](https://mise.jdx.dev)
+### 4. mise (runtime manager)
 
-``` shell
+```shell
 curl https://mise.run | sh
 ```
 
-<strike>
-## rbenv(Deprecated)
+New shells pick it up automatically (`mise activate` is called in both
+`bashrc` and `zshrc`).
+
+## What's Inside
+
+| Path | Purpose |
+|---|---|
+| `bashrc`, `bash_profile`, `profile` | Bash setup. `bash_profile` → `profile` → `bashrc`; PATH (Homebrew, mise, cargo, Go), editor, aliases |
+| `zshrc`, `zprofile`, `zshenv` | Zsh setup. oh-my-zsh + same environment as bash |
+| `alias` | Shared aliases, sourced by both shells |
+| `gitconfig`, `gitignore_global` | Git config and global ignores |
+| `vimrc`, `vimrc.before`, `vimrc.after` | Vim |
+| `doom.d/` | Emacs Doom config |
+| `ideavimrc` | IdeaVim |
+| `karabiner.json` | Karabiner-Elements key remaps (copied to `~/.config/karabiner/`) |
+| `mihomo/` | Clash/mihomo proxy config templates |
+| `ctags`, `globalrc`, `pryrc` | Misc tool configs |
+| `scripts/stow` | The symlink installer |
+
+## Optional
+
+### Emacs Doom
+
+macOS (emacs-plus is a Homebrew formula):
 
 ```shell
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
-```
-</strike>
-
-### install ruby dependencies
-
-```shell
-brew install openssl@3 readline libyaml gmp
-```
-
-<strike>
-## pyenv(Deprecated)
-
-```shell
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-```
-</strike>
-
-### install python dependencies
-
-```shell
-brew install openssl readline sqlite3 xz zlib tcl-tk@8
-```
-
-## Docker
-I prefer the [OrbStack](http://orbstack.dev) over the vanila Docker Desktop.
-
-### MySQL
-
-``` shell
-docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=true -d --restart always -p 3306:3306 mysql
-```
-#### MySQL client
-
-``` shell
-brew install mysql-client
-brew link -f mysql-client
-```
-
-## Emacs
-
-Install emacs-plus, recommended for Doom.
-
-``` shell
 brew tap d12frosted/emacs-plus
 brew install emacs-plus
-```
-
-Make alias to the /Applications folder
-
-``` shell
-osascript -e 'tell application "Finder" to make alias file to posix file "/opt/homebrew/opt/emacs-plus/Emacs.app" at posix file "/Applications" with properties {name:"Emacs.app"}'
-```
-
-### Doom
-
-Install Doom dependencies
-
-``` shell
 brew install coreutils markdown shellcheck fontconfig ripgrep fd
-```
-
-``` shell
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 ```
 
-<strike>
-## Stats(Deprecated)
+On Linux, install Emacs 29+ from your package manager instead.
 
-``` shell
-brew install --cask stats
-```
-</strike>
+### Docker
+
+On macOS I prefer [OrbStack](https://orbstack.dev) over Docker Desktop.
+
+## Notes
+
+- `~/.bashrc.local` and `~/.zshrc.local` are sourced if present — keep
+  machine-specific secrets there; they are not part of this repo.
