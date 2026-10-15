@@ -64,6 +64,22 @@ for f in "${FILES[@]}"; do
   linked=$((linked + 1))
 done
 
+# ------------------------------------------------------------------ user bin dir
+# Executables in bin/ are linked into ~/.local/bin, which both shells already
+# prepend to PATH. That is what makes `git rollback` resolve to bin/git-rollback:
+# git looks up an executable named git-<subcommand> on PATH.
+
+if [ -d "$DOTFILES/bin" ]; then
+  run mkdir -p "$HOME/.local/bin"
+  for f in "$DOTFILES"/bin/*; do
+    [ -f "$f" ] || continue
+    name="$(basename "$f")"
+    backup "$HOME/.local/bin/$name"
+    run ln -sfn "$f" "$HOME/.local/bin/$name"
+    linked=$((linked + 1))
+  done
+fi
+
 # ------------------------------------------------------------------- Emacs Doom
 
 if [ -d "$DOTFILES/doom.d" ]; then

@@ -48,8 +48,30 @@ curl https://mise.run | sh
 | `karabiner.json` | Karabiner-Elements key remaps (copied to `~/.config/karabiner/`) |
 | `mihomo/` | Clash/mihomo proxy config templates |
 | `ctags`, `globalrc`, `pryrc` | Misc tool configs |
+| `bin/` | Small helper commands, linked into `~/.local/bin` — see Commands below |
 | `scripts/install.sh` | One-line bootstrap installer (environment + dotfiles) |
-| `scripts/stow` | Symlinks the repo into `$HOME`; backs up any real file it replaces |
+| `scripts/stow` | Symlinks the repo into `$HOME` (and `bin/` into `~/.local/bin`); backs up any real file it replaces |
+
+## Commands
+
+Helpers in `bin/` are linked into `~/.local/bin`, so they run as normal commands.
+
+### `git rollback`
+
+Git has no `rollback` subcommand; this adds one. It drops recent commits but
+**keeps your changes**.
+
+| Command | What happens |
+|---|---|
+| `git rollback` | drop the last commit, changes stay staged |
+| `git rollback 3` | drop the last three |
+| `git rollback --mixed` | drop it, changes stay unstaged |
+| `git rollback --hard` | drop it **and discard** the changes |
+| `git rollback --undo` | put the last rollback back |
+| `git rollback -h` | full help |
+
+Two things need `--force`: dropping commits that are already pushed, and
+`--undo` on a branch other than the one you rolled back on.
 
 ## Optional
 

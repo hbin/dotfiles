@@ -1,0 +1,367 @@
+#!/bin/sh
+# git-rollback - undo recent local commits, keeping your work by default.
+#
+# Git has no built-in `rollback` subcommand. `git rollback` works because git
+# looks up an executable named `git-rollback` on your PATH and runs it with the
+# remaining arguments.
+#
+#   git rollback          undo the last commit, changes stay staged
+#   git rollback 3        undo the last three commits
+#   git rollback --hard   discard the last commit and its changes
+#   git rollback --undo   put it back
+#
+# SPDX-License-Identifier: MIT
+
+set -eu
+
+PROG=${0##*/}
+VERSION='2.1.0'
+
+# ------------------------------------------------------------------- output --
+#
+# Every helper is named with a `gr_` (git-rollback) prefix so it can never
+# shadow a system command. The first draft called the plain-print helper `say`,
+# and on macOS that resolves to /usr/bin/say - the speech synthesiser - which
+# silently swallowed all of the command's output.
+
+if [ -t 2 ] && [ -z "${NO_COLOR:-}" ] && [ "${TERM:-dumb}" != 'dumb' ]; then
+    COLOR=1
+else
+    COLOR=0
+fi
+
+gr_msg() {
+    printf '%s\n' "$*"
+}
+gr_bold() {
+    if [ "$COLOR" -eq 1 ]; then printf '\033[1m%s\033[0m\n' "$*"; else printf '%s\n' "$*"; fi
+}
+gr_dim() {
+    if [ "$COLOR" -eq 1 ]; then printf '\033[2m%s\033[0m\n' "$*"; else printf '%s\n' "$*"; fi
+}
+gr_warn() {
+    if [ "$COLOR" -eq 1 ]; then
+        printf '\033[33m%s: warning:\033[0m %s\n' "$PROG" "$*" >&2
+    else
+        printf '%s: %s\n' "$PROG" "$*" >&2
+    fi
+}
+gr_die() {
+    if [ "$COLOR" -eq 1 ]; then
+        printf '\033[31m%s: error:\033[0m %s\n' "$PROG" "$*" >&2
+    else
+        printf '%s: %s\n' "$PROG" "$*" >&2
+    fi
+    exit 1
+}
+
+gr_usage() {
+    cat <<'EOF'
+usage: git rollback [<n>] [options]
+
+Undo the last <n> commits (default: 1) without losing your work.
+
+Modes (pick exactly one; default is --soft):
+  --soft        delete the commits, keep the changes staged
+  --mixed       delete the commits, keep the changes unstaged
+  --keep        delete the commits, keep the changes, and abort instead of
+                overwriting local modifications
+  --hard        delete the commits AND discard all uncommitted changes
+
+Other options:
+  --undo        restore the state from before the last rollback
+  -n, --dry-run show what would happen and change nothing
+  -y, --yes     do not ask for confirmation
+  --force       also override the pushed-commit and wrong-branch guards
+  -h, --help    show this help
+  -v, --version show the version
+
+Examples:
+  git rollback               undo the last commit, changes stay staged
+  git rollback 3             undo the last three commits
+  git rollback --mixed       undo the last commit, changes stay unstaged
+  git rollback --hard        throw away the last commit and its changes
+  git rollback --undo        put the last rollback back
+
+Notes:
+  Commits are only removed from your local branch. Anything already pushed
+  needs a force-push afterwards, so this refuses to touch pushed commits
+  unless you pass --force. Use 'git revert' instead when the commits are
+  already shared with other people.
+
+  The pushed-commit check needs an upstream branch. If the current branch has
+  none, the check cannot run and this says so instead of silently skipping it.
+
+  --undo does not trust ORIG_HEAD, which any merge, rebase, pull or reset
+  overwrites. Each rollback records its recovery point and mode inside
+  .git/git-rollback-state, and the undo replays the state the rollback left
+  behind: --soft and --mixed are restored without touching your files, --hard
+  and --keep are restored exactly, after asking. Only the most recent rollback
+  is remembered.
+
+  The record also names the branch it was made on. It lives in .git, one per
+  repository, so it is shared by every branch - an --undo therefore only runs
+  on that same branch, and anywhere else it refuses rather than moving this
+  branch onto an unrelated commit. Rolling back on another branch replaces the
+  record, and says so. --force overrides the branch check.
+
+  For this text, use `git rollback -h` or `git rollback help`:
+  `git rollback --help` never reaches this script - git rewrites it into a
+  `man git-rollback` lookup, which fails unless a man page is installed.
+EOF
+}
+
+# ------------------------------------------------------------------- parsing --
+
+mode='soft'
+mode_given=0
+count=1
+count_given=0
+do_undo=0
+dry_run=0
+assume_yes=0
+force=0
+
+while [ $# -gt 0 ]; do
+    case $1 in
+        --soft|--mixed|--keep|--hard)
+            if [ "$mode_given" -eq 1 ]; then
+                gr_die "only one mode can be given, got --$mode and ${1#--}"
+            fi
+            mode=${1#--}
+            mode_given=1
+            ;;
+        --undo)                       do_undo=1 ;;
+        -n|--dry-run)                 dry_run=1 ;;
+        -y|--yes)                     assume_yes=1 ;;
+        --force)                      force=1 ;;
+        -h|--help|help)               gr_usage; exit 0 ;;
+        -v|--version)                 printf '%s %s\n' "$PROG" "$VERSION"; exit 0 ;;
+        --)                           shift; break ;;
+        -*)
+            # Accept the natural shorthand `git rollback -3` as well.
+            case $1 in
+                -[0-9]*) count=${1#-}; count_given=1 ;;
+                *)       gr_die "unknown option: $1 (try --help)" ;;
+            esac
+            ;;
+        *)
+            if [ "$count_given" -eq 1 ]; then
+                gr_die "unexpected argument: $1 (try --help)"
+            fi
+            count=$1
+            count_given=1
+            ;;
+    esac
+    shift
+done
+
+[ "$#" -eq 0 ] || gr_die "unexpected argument: $1 (try --help)"
+
+case $count in
+    *[!0-9]*|'') gr_die "not a commit count: $count" ;;
+esac
+# Normalise '0005' to '5'. After this the only spelling of zero is '0', so the
+# checks below never have to do arithmetic on an unbounded number - a 20-digit
+# count would otherwise make `[ ... -ge 1 ]` print a shell-level error.
+while [ "${#count}" -gt 1 ] && [ "${count#0}" != "$count" ]; do
+    count=${count#0}
+done
+[ "$count" = '0' ] && gr_die "commit count must be at least 1"
+[ "${#count}" -le 9 ] || gr_die "commit count is too large: $count"
+
+if [ "$do_undo" -eq 1 ]; then
+    if [ "$count_given" -eq 1 ]; then
+        gr_die "--undo cannot be combined with a commit count"
+    fi
+    if [ "$mode_given" -eq 1 ]; then
+        gr_die "--undo replays the mode recorded by the last rollback, so --$mode cannot be given with it"
+    fi
+fi
+
+# ------------------------------------------------------------- repository --
+
+git rev-parse --git-dir >/dev/null 2>&1 || gr_die "not a git repository"
+
+head_sha=$(git rev-parse --verify -q HEAD) || gr_die "this branch has no commits yet"
+# `branch` is for display and may read '(detached HEAD)'. `branch_key` is what
+# goes into the state file: the branch name, or empty while detached - so the
+# undo can tell "a different branch" apart from "no branch at all".
+branch=$(git symbolic-ref --short -q HEAD) || branch=''
+branch_key=$branch
+[ -n "$branch" ] || branch='(detached HEAD)'
+
+state_file="$(git rev-parse --absolute-git-dir)/git-rollback-state"
+
+# Confirm an irreversible-looking action. Returns 0 when it is safe to carry on.
+gr_confirm() {
+    [ "$assume_yes" -eq 1 ] && return 0
+    [ -t 0 ] || gr_die "refusing to $1 without --yes (stdin is not a terminal)"
+    printf '%s: %s [y/N] ' "$PROG" "$1"
+    read -r answer || answer=''
+    case $answer in
+        [yY]|[yY][eE][sS]) return 0 ;;
+        *) gr_die 'aborted' ;;
+    esac
+}
+
+# Rollback bookkeeping. ORIG_HEAD is not usable: merge, rebase, pull, am and
+# reset all overwrite it, so an undo based on it can jump to the wrong commit.
+# Note the branch is stored too: this file is one per repository, not one per
+# branch. A record written on another branch must not be replayed here.
+gr_state_write() {
+    {
+        printf 'head=%s\n'   "$1"
+        printf 'mode=%s\n'   "$2"
+        printf 'count=%s\n'  "$3"
+        printf 'branch=%s\n' "$4"
+        printf 'when=%s\n'   "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    } > "$state_file"
+}
+
+gr_state_read() {
+    state_head=''
+    state_mode=''
+    state_count=''
+    state_branch=''
+    [ -f "$state_file" ] || return 1
+    while IFS='=' read -r key value; do
+        case $key in
+            head)   state_head=$value ;;
+            mode)   state_mode=$value ;;
+            count)  state_count=$value ;;
+            branch) state_branch=$value ;;
+        esac
+    done < "$state_file"
+    [ -n "$state_head" ] || return 1
+    return 0
+}
+
+# Fail when the commits we are about to drop are already on the upstream branch.
+# Each dropped commit is counted as pushed when the upstream tip can reach it.
+gr_guard_pushed() {
+    target=$1
+    upstream_sha=$(git rev-parse --verify -q '@{upstream}') || upstream_sha=''
+    if [ -z "$upstream_sha" ]; then
+        gr_dim "note: no upstream branch is configured, so the pushed-commit check was skipped"
+        return 0
+    fi
+
+    pushed=0
+    for commit in $(git rev-list "$target..HEAD"); do
+        if git merge-base --is-ancestor "$commit" "$upstream_sha" 2>/dev/null; then
+            pushed=$((pushed + 1))
+        fi
+    done
+
+    [ "$pushed" -eq 0 ] && return 0
+    [ "$force" -eq 1 ] && {
+        gr_warn "$pushed commit(s) are already pushed to $(git rev-parse --abbrev-ref '@{upstream}'); --force given"
+        return 0
+    }
+    gr_die "$pushed of the commit(s) to drop are already pushed to $(git rev-parse --abbrev-ref '@{upstream}')
+       rolling back would require a force-push afterwards. Re-run with --force,
+       or use 'git revert' to undo them in history instead."
+}
+
+# ------------------------------------------------------------------- run --
+
+if [ "$do_undo" -eq 1 ]; then
+    gr_state_read || gr_die "nothing to undo (no rollback is recorded in this repository)"
+    git rev-parse --verify -q "$state_head^{commit}" >/dev/null 2>&1 \
+        || gr_die "the recorded recovery point $state_head no longer exists (try: git reflog)"
+    [ "$state_head" != "$head_sha" ] \
+        || gr_die "nothing to undo (HEAD is already at the recorded recovery point)"
+
+    # The record is shared by every branch of this repository, so an undo made
+    # here would happily move an unrelated branch onto the recorded commit.
+    # Only the branch that made the record may replay it.
+    if [ -n "$state_branch" ] && [ "$state_branch" != "$branch_key" ]; then
+        if [ "$force" -eq 1 ]; then
+            gr_warn "the recorded rollback was made on branch '$state_branch', not '$branch'; --force given"
+        else
+            gr_die "the recorded rollback was made on branch '$state_branch', not '$branch'
+       undoing it here would move '$branch' onto an unrelated commit.
+       Switch back first: git switch $state_branch
+       Or, if that is really what you want: git rollback --undo --force"
+        fi
+    fi
+
+    # --soft and --mixed left the changes in the index or working tree, so
+    # moving HEAD back needs no file updates and cannot lose anything.
+    # --hard and --keep left no staged copy to fall back on, so the files have
+    # to be restored - and that is the case worth asking about.
+    case $state_mode in
+        soft|mixed) undo_mode=$state_mode ;;
+        *)          undo_mode=hard ;;
+    esac
+
+    gr_bold "On branch $branch"
+    gr_msg  "Undoing the last rollback (recorded --$state_mode, restoring with --$undo_mode)"
+    gr_msg  "  moving HEAD to: $(git --no-pager log -1 --pretty='%h %s' "$state_head")"
+
+    if [ "$dry_run" -eq 1 ]; then
+        gr_dim "dry run: nothing changed"
+        if [ "$undo_mode" = 'hard' ]; then
+            gr_dim "dry run: the reset was not attempted - it still asks before discarding changes"
+        fi
+        exit 0
+    fi
+
+    if [ "$undo_mode" = 'hard' ] && [ -n "$(git status --porcelain)" ]; then
+        gr_confirm 'discard your uncommitted changes'
+    fi
+
+    undo_from=$head_sha
+    git reset "--$undo_mode" "$state_head"
+    gr_state_write "$undo_from" "$state_mode" "$state_count" "$branch_key"
+
+    gr_msg ''
+    gr_bold "Done. HEAD is back at $(git rev-parse --short HEAD)"
+    gr_dim  "Run it again to re-apply the rollback    (recovery point: $undo_from)"
+    exit 0
+fi
+
+# --undo is excluded above, so the target is always a plain commit here.
+target=$(git rev-parse --verify -q "HEAD~$count") \
+    || gr_die "cannot roll back $count commit(s): $branch does not have that many"
+
+dropped_count=$(git rev-list --count "$target..HEAD")
+gr_guard_pushed "$target"
+
+gr_bold "On branch $branch"
+gr_msg  "Rolling back $dropped_count commit(s) (--$mode)"
+git --no-pager log --oneline --no-decorate "$target..HEAD" | sed 's/^/  - /'
+gr_msg  "  resetting to: $(git --no-pager log -1 --pretty='%h %s' "$target")"
+
+# One record per repository: rolling back here discards whatever another branch
+# recorded, so say so rather than dropping it silently.
+if gr_state_read && [ -n "$state_branch" ] && [ "$state_branch" != "$branch_key" ]; then
+    gr_dim "note: this replaces the recovery point recorded for branch '$state_branch'"
+fi
+
+if [ "$dry_run" -eq 1 ]; then
+    gr_dim "dry run: nothing changed"
+    if [ "$mode" = 'keep' ]; then
+        gr_dim "dry run: the reset was not attempted - --keep can still refuse at run"
+        gr_dim "         time if it would overwrite local modifications"
+    fi
+    exit 0
+fi
+
+if [ "$mode" = 'hard' ] && [ -n "$(git status --porcelain)" ]; then
+    gr_confirm 'discard your uncommitted changes'
+fi
+
+git reset "--$mode" "$target"
+gr_state_write "$head_sha" "$mode" "$dropped_count" "$branch_key"
+
+gr_msg ''
+gr_bold "Done. $dropped_count commit(s) dropped, HEAD is now $(git rev-parse --short HEAD)"
+case $mode in
+    soft)  gr_dim 'Your changes are staged. Commit them again, or drop them with: git restore --staged .' ;;
+    mixed) gr_dim 'Your changes are in the working tree, unstaged.' ;;
+    keep)  gr_dim 'Your changes were kept in place.' ;;
+    hard)  gr_dim 'Your changes were discarded.' ;;
+esac
+gr_dim "Undo it with: git rollback --undo    (recovery point: $head_sha)"
