@@ -200,7 +200,7 @@ proxy-groups:
     type: fallback
 
     url: https://cp.cloudflare.com/generate_204
-    interval: 600
+    interval: 180
     timeout: 5000
     max-failed-times: 3
     lazy: true
@@ -277,7 +277,7 @@ proxy-groups:
 
   - name: 香港节点
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
-    type: url-test
+    type: smart
 
     include-all: true
 
@@ -285,9 +285,8 @@ proxy-groups:
     exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
 
     url: https://cp.cloudflare.com/generate_204
-    interval: 600
+    interval: 180
     timeout: 5000
-    tolerance: 20
     lazy: true
 
   - name: 台湾节点
@@ -300,7 +299,7 @@ proxy-groups:
     exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
 
     url: https://cp.cloudflare.com/generate_204
-    interval: 600
+    interval: 180
     timeout: 5000
     tolerance: 20
     lazy: true
@@ -315,7 +314,7 @@ proxy-groups:
     exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
 
     url: https://cp.cloudflare.com/generate_204
-    interval: 600
+    interval: 180
     timeout: 5000
     tolerance: 20
     lazy: true
@@ -330,7 +329,7 @@ proxy-groups:
     exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
 
     url: https://cp.cloudflare.com/generate_204
-    interval: 600
+    interval: 180
     timeout: 5000
     tolerance: 20
     lazy: true
@@ -345,7 +344,7 @@ proxy-groups:
     exclude-filter: '0\.[0-5]|低倍率|省流|大流量|实验性'
 
     url: https://cp.cloudflare.com/generate_204
-    interval: 600
+    interval: 180
     timeout: 5000
     tolerance: 20
     lazy: true
