@@ -127,3 +127,6 @@ xcuserdata
 # Carthage/Checkouts
 
 Carthage/Build
+
+# WorkBuddy (local agent data: memory, session state)
+.workbuddy/
