@@ -5,41 +5,34 @@ Git, Vim, Emacs Doom, Karabiner, and proxy config templates.
 
 ## Quick Start
 
-On a fresh machine, run these in order.
-
-### 1. Homebrew (optional)
-
-Works on macOS and Linux.
+One command sets everything up:
 
 ```shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/hbin/dotfiles/master/scripts/install.sh)"
 ```
 
-### 2. Clone and link
+Options: `--dry-run`, `--skip-brew`, `--skip-omz`, `--skip-mise`
+(run `--help` for details). Open a new shell afterwards, or `exec $SHELL`.
+
+### Doing it manually
+
+If you would rather run each step yourself:
 
 ```shell
+# 1. Homebrew (optional; works on macOS and Linux)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. Clone and link
 git clone https://github.com/hbin/dotfiles.git ~/dotfiles
 ~/dotfiles/scripts/stow
-```
 
-The `stow` script symlinks everything into `$HOME` (it is plain
-`ln -sf`, no GNU stow required).
-
-### 3. oh-my-zsh + autosuggestions
-
-```shell
+# 3. oh-my-zsh + autosuggestions
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-```
 
-### 4. mise (runtime manager)
-
-```shell
+# 4. mise (runtime manager)
 curl https://mise.run | sh
 ```
-
-New shells pick it up automatically (`mise activate` is called in both
-`bashrc` and `zshrc`).
 
 ## What's Inside
 
@@ -55,7 +48,8 @@ New shells pick it up automatically (`mise activate` is called in both
 | `karabiner.json` | Karabiner-Elements key remaps (copied to `~/.config/karabiner/`) |
 | `mihomo/` | Clash/mihomo proxy config templates |
 | `ctags`, `globalrc`, `pryrc` | Misc tool configs |
-| `scripts/stow` | The symlink installer |
+| `scripts/install.sh` | One-line bootstrap installer (environment + dotfiles) |
+| `scripts/stow` | Symlinks the repo into `$HOME`; backs up any real file it replaces |
 
 ## Optional
 
@@ -73,9 +67,14 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 On Linux, install Emacs 29+ from your package manager instead.
 
-### Docker
+### Karabiner-Elements
 
-On macOS I prefer [OrbStack](https://orbstack.dev) over Docker Desktop.
+macOS only. The installer copies `karabiner.json` into place but does not
+install the app — do that yourself if you use it:
+
+```shell
+brew install --cask karabiner-elements
+```
 
 ## Notes
 
