@@ -42,9 +42,8 @@ curl https://mise.run | sh
 | `zshrc`, `zprofile`, `zshenv` | Zsh setup. oh-my-zsh + same environment as bash |
 | `alias` | Shared aliases, sourced by both shells |
 | `gitconfig`, `gitignore_global` | Git config and global ignores |
-| `vimrc`, `vimrc.before`, `vimrc.after` | Vim |
+| `vimrc` | Vim |
 | `doom.d/` | Emacs Doom config |
-| `ideavimrc` | IdeaVim |
 | `ghostty.conf` | Ghostty terminal config (symlinked to `~/.config/ghostty/config`) |
 | `karabiner.json` | Karabiner-Elements key remaps (symlinked to `~/.config/karabiner/`; macOS only) |
 | `mihomo/` | Clash/mihomo proxy config templates |

@@ -35,7 +35,7 @@ esac
 
 FILES=(
   alias bashrc bash_profile ctags gitconfig gitignore_global globalrc
-  ideavimrc profile pryrc vimrc vimrc.after vimrc.before
+  profile pryrc vimrc
   zprofile zshenv zshrc
 )
 
