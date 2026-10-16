@@ -8,14 +8,13 @@
 # stdin attached to your terminal, so the sudo/prompt-driven installers below
 # still work.
 #
-# Every step is idempotent — re-running is safe. Nothing is forced: existing
-# dotfiles are symlinked over (the originals are moved to ~/.dotfiles-backup).
+# Every step is idempotent — re-running is safe. Existing dotfiles are simply
+# symlinked over; anything already at a destination path is overwritten.
 
 set -euo pipefail
 
 REPO_URL="${DOTFILES_REPO:-https://github.com/hbin/dotfiles.git}"
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
-BACKUP_DIR="$HOME/.dotfiles-backup"
 DRY_RUN=0
 SKIP_BREW=0
 SKIP_OMZ=0
@@ -136,8 +135,8 @@ if [ "$DOTFILES_DIR" != "$HOME/dotfiles" ]; then
   log "Linking from $DOTFILES_DIR (not ~/dotfiles)"
 fi
 
-# scripts/stow is self-contained: it backs up any real file it would replace,
-# so there is nothing to prepare here.
+# scripts/stow is self-contained: it overwrites whatever is already at each
+# destination path, so there is nothing to prepare here.
 log "Linking dotfiles (scripts/stow)"
 run env DOTFILES_DIR="$DOTFILES_DIR" bash "$DOTFILES_DIR/scripts/stow"
 
@@ -163,6 +162,5 @@ Next steps:
     ~/.config/mise/config.toml.
   - macOS only: install Karabiner-Elements yourself if you use it
     (brew install --cask karabiner-elements). Its config is already
-    copied to ~/.config/karabiner/karabiner.json.
-  - Any dotfiles that were replaced are in $BACKUP_DIR
+    symlinked to ~/.config/karabiner/karabiner.json.
 EOF

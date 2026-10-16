@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 # Link this repo's config files into $HOME.
 #
-# Safe to re-run and safe to run on its own: files that would be overwritten
-# are moved to ~/.dotfiles-backup first (only symlinks pointing into this repo
-# are replaced in place).
+# Safe to re-run: each destination is replaced in place (ln -sf), so nothing is
+# backed up — whatever is already at the destination path is overwritten,
+# including a real (non-symlink) file or directory.
 #
 # Usage: scripts/stow [--dry-run]
 
 set -euo pipefail
 
 DOTFILES="${DOTFILES_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
-BACKUP="$HOME/.dotfiles-backup"
 DRY_RUN=0
-STAMP="$(date +%Y%m%d%H%M%S)"
 
 run() {
   if [ "$DRY_RUN" -eq 1 ]; then
@@ -33,17 +31,6 @@ esac
 
 [ -d "$DOTFILES" ] || { echo "dotfiles dir not found: $DOTFILES" >&2; exit 1; }
 
-# Move a real file/dir aside so it is never silently destroyed. Symlinks are
-# left alone (ln -sf replaces them) and missing paths need no backup.
-backup() {
-  local path="$1" name
-  [ -e "$path" ] || return 0
-  [ -L "$path" ] && return 0
-  name="$(basename "$path")"; name="${name#.}"
-  run mkdir -p "$BACKUP"
-  run mv "$path" "$BACKUP/$name.$STAMP"
-}
-
 # ------------------------------------------------------------- shell & tool configs
 
 FILES=(
@@ -59,7 +46,6 @@ for f in "${FILES[@]}"; do
     warn "not in repo, skipping: $f"
     continue
   fi
-  backup "$HOME/.$f"
   run ln -sfn "$src" "$HOME/.$f"
   linked=$((linked + 1))
 done
@@ -74,7 +60,6 @@ if [ -d "$DOTFILES/bin" ]; then
   for f in "$DOTFILES"/bin/*; do
     [ -f "$f" ] || continue
     name="$(basename "$f")"
-    backup "$HOME/.local/bin/$name"
     run ln -sfn "$f" "$HOME/.local/bin/$name"
     linked=$((linked + 1))
   done
@@ -83,11 +68,7 @@ fi
 # ------------------------------------------------------------------- Emacs Doom
 
 if [ -d "$DOTFILES/doom.d" ]; then
-  if [ -L "$HOME/.doom.d" ] || [ ! -e "$HOME/.doom.d" ]; then
-    run rm -rf "$HOME/.doom.d"
-  else
-    backup "$HOME/.doom.d"
-  fi
+  run rm -rf "$HOME/.doom.d"
   run ln -sfn "$DOTFILES/doom.d" "$HOME/.doom.d"
 fi
 
@@ -95,18 +76,25 @@ fi
 # macOS only — Karabiner-Elements does not exist on Linux.
 
 if [ "$(uname -s)" = "Darwin" ] && [ -f "$DOTFILES/karabiner.json" ]; then
-  target="$HOME/.config/karabiner/karabiner.json"
   run mkdir -p "$HOME/.config/karabiner"
-  # Karabiner writes this file from its GUI: keep the current one if it differs
-  # from the repo copy (skip the copy when identical, so re-runs stay quiet).
-  if [ -f "$target" ] && ! cmp -s "$target" "$DOTFILES/karabiner.json"; then
-    backup "$target"
-  fi
-  run cp "$DOTFILES/karabiner.json" "$target"
+  run ln -sfn "$DOTFILES/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+  linked=$((linked + 1))
+fi
+
+# --------------------------------------------------------------------- Ghostty
+# XDG config path, shared by macOS and Linux.
+
+if [ -f "$DOTFILES/ghostty.conf" ]; then
+  run mkdir -p "$HOME/.config/ghostty"
+  run ln -sfn "$DOTFILES/ghostty.conf" "$HOME/.config/ghostty/config"
+  linked=$((linked + 1))
 fi
 
 # ------------------------------------------------------------------------- done
 
-printf 'Linked %d configs from %s\n' "$linked" "$DOTFILES"
-[ -d "$BACKUP" ] && printf 'Previous files (if any) are in %s\n' "$BACKUP"
+if [ "$DRY_RUN" -eq 1 ]; then
+  printf '[dry-run] would link %d configs from %s\n' "$linked" "$DOTFILES"
+else
+  printf 'Linked %d configs from %s\n' "$linked" "$DOTFILES"
+fi
 exit 0

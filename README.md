@@ -1,7 +1,7 @@
 # Dotfiles
 
 My personal dotfiles, shared between macOS and Linux. Shell (bash + zsh),
-Git, Vim, Emacs Doom, Karabiner, and proxy config templates.
+Git, Vim, Emacs Doom, Ghostty, Karabiner, and proxy config templates.
 
 ## Quick Start
 
@@ -45,12 +45,13 @@ curl https://mise.run | sh
 | `vimrc`, `vimrc.before`, `vimrc.after` | Vim |
 | `doom.d/` | Emacs Doom config |
 | `ideavimrc` | IdeaVim |
-| `karabiner.json` | Karabiner-Elements key remaps (copied to `~/.config/karabiner/`) |
+| `ghostty.conf` | Ghostty terminal config (symlinked to `~/.config/ghostty/config`) |
+| `karabiner.json` | Karabiner-Elements key remaps (symlinked to `~/.config/karabiner/`; macOS only) |
 | `mihomo/` | Clash/mihomo proxy config templates |
 | `ctags`, `globalrc`, `pryrc` | Misc tool configs |
 | `bin/` | Small helper commands, linked into `~/.local/bin` — see Commands below |
 | `scripts/install.sh` | One-line bootstrap installer (environment + dotfiles) |
-| `scripts/stow` | Symlinks the repo into `$HOME` (and `bin/` into `~/.local/bin`); backs up any real file it replaces |
+| `scripts/stow` | Symlinks the repo into `$HOME` (and `bin/` into `~/.local/bin`); replaces whatever is already at each destination |
 
 ## Commands
 
@@ -89,10 +90,23 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 On Linux, install Emacs 29+ from your package manager instead.
 
+### Ghostty
+
+Works on macOS and Linux. The installer symlinks `ghostty.conf` to
+`~/.config/ghostty/config` but does not install the app — do that yourself if
+you use it:
+
+```shell
+brew install --cask ghostty
+```
+
+On Linux, install Ghostty from your package manager.
+
 ### Karabiner-Elements
 
-macOS only. The installer copies `karabiner.json` into place but does not
-install the app — do that yourself if you use it:
+macOS only. The installer symlinks `karabiner.json` to
+`~/.config/karabiner/karabiner.json` but does not install the app — do that
+yourself if you use it:
 
 ```shell
 brew install --cask karabiner-elements
