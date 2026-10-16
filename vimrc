@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""
-" Creator: hbin - hbin000dev@gmail.com
+" Creator: hbin
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 set shortmess=atI

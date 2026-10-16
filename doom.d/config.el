@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-(setq user-full-name "Huang Bin"
-      user-mail-address "hbin000dev@gmail.com")
+;; `user-mail-address' is deliberately not set here: this file is public.
+(setq user-full-name "Huang Bin")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;

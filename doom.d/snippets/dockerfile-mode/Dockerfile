@@ -6,7 +6,7 @@
 # VERSION               0.0.1
 
 FROM       ubuntu
-MAINTAINER Huang Bin <hbin000dev@gmail.com>
+MAINTAINER Huang Bin
 
 RUN apt-get update && apt-get install -y inotify-tools nginx apache2 openssh-server
 

@@ -1,6 +1,7 @@
-[user]
-  name = Huang Bin
-  email = hbin000dev@gmail.com
+# Identity is machine-local and untracked (this repo is public):
+# ~/.gitconfig.local defines [user] name/email.
+[include]
+  path = ~/.gitconfig.local
 
 [color]
   ui = true
