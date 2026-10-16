@@ -115,3 +115,7 @@ brew install --cask karabiner-elements
 
 - `~/.bashrc.local` and `~/.zshrc.local` are sourced if present — keep
   machine-specific secrets there; they are not part of this repo.
+- Git identity is not tracked either: `gitconfig` includes `~/.gitconfig.local`,
+  which you create yourself —
+  `git config --file ~/.gitconfig.local user.name "Your Name"` and
+  `git config --file ~/.gitconfig.local user.email "you@example.com"`.

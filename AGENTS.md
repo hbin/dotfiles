@@ -79,6 +79,10 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/hbin/dotfiles/master/scr
 # Apply shell changes in the running shell
 exec $SHELL          # or: source ~/.zshrc
 
+# Git identity lives outside the repo (gitconfig includes this untracked file)
+git config --file ~/.gitconfig.local user.name "Your Name"
+git config --file ~/.gitconfig.local user.email "you@example.com"
+
 # Syntax / validity checks (there is no test suite; use these)
 bash -n scripts/stow scripts/install.sh
 sh -n bin/git-rollback
