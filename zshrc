@@ -15,6 +15,12 @@ ZSH_THEME="gentoo"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(brew git bundler zsh-autosuggestions)
 
+# Completion dump. oh-my-zsh honours a pre-set ZSH_COMPDUMP; its own default is
+# $HOME/.zcompdump-<host>-<version>, which litters $HOME. ${HOST%%.*} is the
+# short hostname omz itself would use.
+ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${HOST%%.*}-${ZSH_VERSION}"
+command mkdir -p "${ZSH_COMPDUMP:h}"
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
