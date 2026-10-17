@@ -1,3 +1,6 @@
+alias pi='omp'
+alias vim='nvim'
+
 alias npm-list='npm list --global --depth 0'
 
 alias users="awk -F':' '{ print $1}' /etc/passwd"
