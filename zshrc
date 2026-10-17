@@ -15,11 +15,18 @@ ZSH_THEME="gentoo"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(brew git bundler zsh-autosuggestions)
 
-# Completion dump. oh-my-zsh honours a pre-set ZSH_COMPDUMP; its own default is
-# $HOME/.zcompdump-<host>-<version>, which litters $HOME. ${HOST%%.*} is the
-# short hostname omz itself would use.
-ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${HOST%%.*}-${ZSH_VERSION}"
-command mkdir -p "${ZSH_COMPDUMP:h}"
+# zsh state that would otherwise litter $HOME lives in one directory. Both must
+# be set before oh-my-zsh is sourced: it honours pre-set ZSH_COMPDUMP/HISTFILE.
+ZSH_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+command mkdir -p "$ZSH_CACHE"
+
+# Completion dump; omz's own default is $HOME/.zcompdump-<host>-<version>.
+# ${HOST%%.*} is the short hostname omz itself would use.
+ZSH_COMPDUMP="$ZSH_CACHE/zcompdump-${HOST%%.*}-${ZSH_VERSION}"
+
+# History file; omz's own default is $HOME/.zsh_history. Its HISTSIZE/SAVEHIST
+# and history setopts are left untouched.
+HISTFILE="$ZSH_CACHE/history"
 
 source $ZSH/oh-my-zsh.sh
 
