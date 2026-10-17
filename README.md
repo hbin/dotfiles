@@ -41,7 +41,7 @@ curl https://mise.run | sh
 | `bashrc`, `bash_profile`, `profile` | Bash setup. `bash_profile` → `profile` → `bashrc`; PATH (Homebrew, mise, cargo, Go), editor, aliases |
 | `zshrc`, `zprofile`, `zshenv` | Zsh setup. oh-my-zsh + same environment as bash |
 | `alias` | Shared aliases, sourced by both shells |
-| `gitconfig`, `gitignore_global` | Git config and global ignores |
+| `gitconfig`, `gitignore_global` | Git config and global ignores (`.DS_Store`, editor droppings) |
 | `vimrc` | Vim |
 | `doom.d/` | Emacs Doom config |
 | `ghostty.conf` | Ghostty terminal config (symlinked to `~/.config/ghostty/config`) |
