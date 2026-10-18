@@ -86,7 +86,13 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # User configuration
-[ -n "$TMUX" ] || export TERM=xterm-256color
+
+# Keep the terminal's own TERM (e.g. Ghostty's xterm-ghostty) instead of
+# downgrading it. Only fall back when TERM is missing, "dumb", or has no
+# terminfo entry on this host (which happens on some SSH targets).
+if [ -z "$TERM" ] || [ "$TERM" = dumb ] || ! infocmp "$TERM" >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
 export ALTERNATE_EDITOR=""
 
 # Press Ctrl+D forty-two times before it actually quits the shell

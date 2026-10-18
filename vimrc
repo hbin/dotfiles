@@ -31,7 +31,6 @@ set noswapfile
 " Edit
 set autoread
 set backspace=start,indent,eol
-set bsdir=buffer
 set history=1024
 set hidden
 set list

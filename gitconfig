@@ -29,8 +29,11 @@
 [credential]
   helper = osxkeychain
 
+[init]
+  defaultBranch = master
+
 [grep]
-  extendRegexp = true
+  extendedRegexp = true
   lineNumber = true
 
 [alias]

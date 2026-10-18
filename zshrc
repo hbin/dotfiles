@@ -28,7 +28,9 @@ ZSH_COMPDUMP="$ZSH_CACHE/zcompdump-${HOST%%.*}-${ZSH_VERSION}"
 # and history setopts are left untouched.
 HISTFILE="$ZSH_CACHE/history"
 
-source $ZSH/oh-my-zsh.sh
+if [ -r "$ZSH/oh-my-zsh.sh" ]; then
+    source "$ZSH/oh-my-zsh.sh"
+fi
 
 # User configuration
 export PATH=$HOME/.local/bin:$PATH
@@ -59,7 +61,12 @@ fi
 # (bash IGNOREEOF=42: exits on the 43rd; zsh ignores the IGNOREEOF variable)
 setopt ignore_eof
 
-[ -n "$TMUX" ] || export TERM=xterm-256color
+# Keep the terminal's own TERM (e.g. Ghostty's xterm-ghostty) instead of
+# downgrading it. Only fall back when TERM is missing, "dumb", or has no
+# terminfo entry on this host (which happens on some SSH targets).
+if [ -z "$TERM" ] || [ "$TERM" = dumb ] || ! infocmp "$TERM" >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
 export ALTERNATE_EDITOR=""
 
 # Preferred editor: nvim with vim fallback

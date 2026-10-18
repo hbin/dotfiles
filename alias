@@ -10,8 +10,8 @@ fi
 
 alias npm-list='npm list --global --depth 0'
 
-alias users="awk -F':' '{ print $1}' /etc/passwd"
-alias groups="cut -d: -f1 /etc/group"
+alias users='grep -v "^#" /etc/passwd | cut -d: -f1'
+alias groups='grep -v "^#" /etc/group | cut -d: -f1'
 
 alias dns='sudo killall -HUP mDNSResponder'
 alias reset-launchpad='defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock'

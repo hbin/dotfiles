@@ -13,6 +13,12 @@ Thumbs.db
 *.bak
 .directory
 
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+!.env.sample
+
 # Emacs
 *.elc
 .#*
