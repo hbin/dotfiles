@@ -1,5 +1,12 @@
-alias pi='omp'
-alias vim='nvim'
+# only alias pi to omp when the real pi binary is not installed
+if ! command -v pi >/dev/null 2>&1; then
+    alias pi='omp'
+fi
+
+# only alias vim to nvim when nvim is installed
+if command -v nvim >/dev/null 2>&1; then
+    alias vim='nvim'
+fi
 
 alias npm-list='npm list --global --depth 0'
 
