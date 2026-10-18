@@ -13,7 +13,7 @@ Single user, single branch (`master`, remote `git@github.com:hbin/dotfiles.git`)
 
 | Path | What it is | Linked to |
 |---|---|---|
-| `alias`, `bashrc`, `bash_profile`, `ctags`, `gitconfig`, `gitignore_global`, `globalrc`, `profile`, `pryrc`, `vimrc`, `zprofile`, `zshenv`, `zshrc` | flat shell/editor/tool configs | `~/.<name>` |
+| `alias`, `bashrc`, `bash_profile`, `gitconfig`, `gitignore_global`, `profile`, `pryrc`, `vimrc`, `zprofile`, `zshenv`, `zshrc` | flat shell/editor/tool configs | `~/.<name>` |
 | `bin/` | helper executables (`git-rollback`) | `~/.local/bin/<name>` |
 | `doom.d/` | Doom Emacs config and snippets | `~/.doom.d` |
 | `karabiner.json` | Karabiner-Elements remaps (macOS only) | `~/.config/karabiner/karabiner.json` |
@@ -98,9 +98,8 @@ The repo is public.
   `~/.gitconfig.local` included by `gitconfig`. Do not add an address back to
   `doom.d/config.el`, `vimrc`, or the snippets.
 - Machine-specific values (Karabiner device ids, proxy/server values in
-  `mihomo/` and tool configs, hardcoded gtags paths in `globalrc`) are
-  intentional. Cite them by file — never copy the literals into docs, commits,
-  or issues.
+  `mihomo/` and tool configs) are intentional. Cite them by file — never copy
+  the literals into docs, commits, or issues.
 
 ## Commands
 

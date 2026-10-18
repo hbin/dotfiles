@@ -32,10 +32,6 @@ url/
 .projectile
 projectile-bookmarks.eld
 custom.el
-TAGS
-GPATH
-GRTAGS
-GTAGS
 *_flymake.*
 .agignore
 

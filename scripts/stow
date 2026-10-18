@@ -34,7 +34,7 @@ esac
 # ------------------------------------------------------------- shell & tool configs
 
 FILES=(
-  alias bashrc bash_profile ctags gitconfig gitignore_global globalrc
+  alias bashrc bash_profile gitconfig gitignore_global
   profile pryrc vimrc
   zprofile zshenv zshrc
 )
