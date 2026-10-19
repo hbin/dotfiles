@@ -8,6 +8,11 @@ if command -v nvim >/dev/null 2>&1; then
     alias vim='nvim'
 fi
 
+# only alias z to the zed cli when zed is installed
+if command -v zed >/dev/null 2>&1; then
+    alias z='zed'
+fi
+
 alias npm-list='npm list --global --depth 0'
 
 alias users='grep -v "^#" /etc/passwd | cut -d: -f1'
