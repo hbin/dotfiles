@@ -73,6 +73,12 @@ if [ -f "$HOME/.bashrc.local" ]; then
     . "$HOME/.bashrc.local"
 fi
 
+# Collapse duplicate PATH entries (bash has no zsh `typeset -U path`);
+# keeps the first occurrence and drops empty entries. Child shells re-run
+# this file and would otherwise prepend a fresh copy of every entry.
+PATH="$(printf '%s' "$PATH" | awk -v RS=: '!($0 in seen) && $0 != "" {seen[$0]; printf "%s%s", sep, $0; sep=":"}')"
+export PATH
+
 # Alias definitions.
 alias ..='cd ..'
 alias ...='cd ../..'
