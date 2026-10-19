@@ -33,6 +33,15 @@ if [ -r "$ZSH/oh-my-zsh.sh" ]; then
 fi
 
 # User configuration
+
+# Homebrew — non-login zsh never reads zprofile, so mirror its PATH setup
+# here (same block as bashrc). Prepending on every shell is fine: re-runs
+# only add duplicates, which typeset -U path strips at the end.
+export PATH=/usr/local/sbin:$PATH
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 export PATH=$HOME/.local/bin:$PATH
 
 # Emacs doom {{{

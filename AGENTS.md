@@ -51,9 +51,10 @@ row to README's path table. Verify with `scripts/stow --dry-run`.
 - bash: `~/.bash_profile` → `~/.profile` → `~/.bashrc`. `bashrc` returns early
   for non-interactive shells, so PATH/tool activation stays above that guard and
   aliases/hooks below it.
-- zsh: `~/.zshenv` (locale, every shell) → `~/.zprofile` (PATH) → `~/.zshrc`
-  (oh-my-zsh, then user config). Non-interactive zsh never reads `.zshrc`, so
-  no guard is needed.
+- zsh: `~/.zshenv` (locale, every shell) → `~/.zshrc` (PATH, oh-my-zsh,
+  then user config). `zprofile` was removed: its brew PATH block moved into
+  `zshrc`, which every interactive zsh reads. Non-interactive zsh never reads
+  `.zshrc`, so no guard is needed.
 - PATH is built by prepending: `/usr/local/sbin`, Homebrew, `~/.local/bin`,
   Doom's bin, mise/cargo, `$GOPATH/bin` — later steps win. `zshrc`'s
   `typeset -U path` dedupes and must stay the last PATH operation.

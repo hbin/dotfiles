@@ -39,7 +39,7 @@ curl https://mise.run | sh
 | Path | Purpose |
 |---|---|
 | `bashrc`, `bash_profile`, `profile` | Bash setup. `bash_profile` → `profile` → `bashrc`; PATH (Homebrew, mise, cargo, Go), editor, aliases |
-| `zshrc`, `zprofile`, `zshenv` | Zsh setup. oh-my-zsh + same environment as bash |
+| `zshrc`, `zshenv` | Zsh setup. oh-my-zsh + same environment as bash; `zshenv` sets locale, `zshrc` holds PATH and interactive config |
 | `alias` | Shared aliases, sourced by both shells |
 | `gitconfig`, `gitignore_global` | Git config and global ignores (`.DS_Store`, editor droppings) |
 | `vimrc` | Vim |

@@ -36,7 +36,7 @@ esac
 FILES=(
   alias bashrc bash_profile gitconfig gitignore_global
   profile pryrc vimrc
-  zprofile zshenv zshrc
+  zshenv zshrc
 )
 
 linked=0
