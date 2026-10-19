@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-;; `user-mail-address' is deliberately not set here: this file is public.
-(setq user-full-name "Huang Bin")
+;; `user-full-name' and `user-mail-address' are deliberately not set here: this
+;; file is public. Set them in an untracked local file if you need them.
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -255,12 +255,12 @@
    '(("\\(\\b\\sw[_a-zA-Z0-9]*:\\)\\(?:\\s-\\|$\\)" (1 font-lock-constant-face))
      ("\\(^\\|[^_:.@$\\W]\\|\\.\\.\\)\\b\\(include\\|extend\\|require\\|autoload\\)\\b[^_:.@$\\W]" . font-lock-function-name-face)))
 
-  (defun hbin-ruby-mode-hook ()
+  (defun ruby-mode-extra-hook ()
     (setq-local whitespace-line-column 120)
 
     (modify-syntax-entry ?$ "w")   ; Words prefixed with $ are global variables,
     (modify-syntax-entry ?@ "w"))  ; prefixed with @ are instance variables.
-  (add-hook 'ruby-mode-hook 'hbin-ruby-mode-hook))
+  (add-hook 'ruby-mode-hook 'ruby-mode-extra-hook))
 
 (use-package! ruby-hash-syntax
   :defer t
