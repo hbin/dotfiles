@@ -14,7 +14,7 @@
 [core]
   editor = vim
   pager  = less -FRSX
-  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  whitespace = -indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore_global
 
 [diff]
@@ -25,9 +25,6 @@
 
 [merge]
   tool = vimdiff
-
-[credential]
-  helper = osxkeychain
 
 [init]
   defaultBranch = master
