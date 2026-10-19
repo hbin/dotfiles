@@ -132,3 +132,6 @@ Carthage/Build
 
 # WorkBuddy (local agent data: memory, session state)
 .workbuddy/
+
+# Paseo (local agent session file)
+paseo.json

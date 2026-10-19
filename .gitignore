@@ -2,3 +2,4 @@
 # ~/.gitignore_global (see gitconfig core.excludesfile).
 .DS_Store
 .workbuddy/
+paseo.json
