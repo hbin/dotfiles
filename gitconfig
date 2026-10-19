@@ -12,7 +12,6 @@
   interactive = auto
 
 [core]
-  editor = vim
   pager  = less -FRSX
   whitespace = -indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore_global
