@@ -46,9 +46,11 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+# for setting history length see bash(1) for HISTSIZE and HISTFILESIZE in bash(1)
+# Match oh-my-zsh's floor in spirit: 10x the old 1000/2000 so daily history
+# survives (files stay in the 2-4MB range).
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # enable color support of ls and also add handy aliases
 if command -v gdircolors >/dev/null 2>&1; then
