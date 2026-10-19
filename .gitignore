@@ -1,0 +1,4 @@
+# Fail safe for repo-local OS/agent droppings; machine ignore patterns live in
+# ~/.gitignore_global (see gitconfig core.excludesfile).
+.DS_Store
+.workbuddy/
