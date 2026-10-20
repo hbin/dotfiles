@@ -86,13 +86,10 @@
 (use-package key-chord
   :config (key-chord-mode 1))
 
+;; Command and Option are swapped for GUI Emacs: ⌘ acts as Meta, ⌥ as Super.
 (when (string= system-type "darwin")
-  (if (eq mac-command-modifier 'super)
-      (progn
-        (setq mac-command-modifier 'meta)
-        (setq mac-option-modifier 'super))
-    (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'super)))
+  (setq mac-command-modifier 'meta
+        mac-option-modifier  'super))
 
 ;; My personal backward kill
 (defun +default-backward-kill-word-or-region ()
