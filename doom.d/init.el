@@ -14,6 +14,15 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+;; libgccjit bundled with the emacsformacosx build derives its default
+;; deployment target from the kernel version (Darwin 27 -> macOS 18.0, a version
+;; that never existed), so clang rejects the flag and native compilation fails
+;; with "invalid version number in '-mmacosx-version-min=18.0'". Pin a real one.
+;; Must live above `doom!': the failing compile is a subr trampoline triggered
+;; from `doom-after-modules-init-hook', which runs before $DOOMDIR/config.el.
+(when (eq system-type 'darwin)
+  (setq native-comp-driver-options '("-mmacosx-version-min=15.0" "-Wl,-w")))
+
 (doom! :input
        ;;chinese
        ;;japanese
