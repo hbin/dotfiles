@@ -19,3 +19,6 @@ alias users='grep -v "^#" /etc/passwd | cut -d: -f1'
 
 alias dns='sudo killall -HUP mDNSResponder'
 alias reset-launchpad='defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock'
+
+# NO_COLOR is inherited from the GUI launch environment; clear it for tig only.
+alias tig='NO_COLOR= tig'
