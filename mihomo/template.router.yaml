@@ -197,7 +197,7 @@ proxy-groups:
 
   - name: 故障转移
     icon: https://gcore.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Bypass.png
-    type: fallback
+    type: url-test
 
     url: https://cp.cloudflare.com/generate_204
     interval: 180
