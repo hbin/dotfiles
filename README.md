@@ -50,6 +50,7 @@ curl https://mise.run | sh
 | `pryrc` | Pry (Ruby REPL) config |
 | `bin/` | Small helper commands, linked into `~/.local/bin` — see Commands below |
 | `scripts/install.sh` | One-line bootstrap installer (environment + dotfiles) |
+| `scripts/set-default-editor.sh` | macOS: makes a chosen app the default for common text and source formats |
 | `scripts/stow` | Symlinks the repo into `$HOME` (and `bin/` into `~/.local/bin`); replaces whatever is already at each destination |
 
 ## Commands
@@ -110,6 +111,35 @@ yourself if you use it:
 ```shell
 brew install --cask karabiner-elements
 ```
+
+### Default text editor
+
+macOS only. `scripts/set-default-editor.sh` uses
+[`duti`](https://github.com/jgee/duti) to make a chosen editor the default for
+plain text, configuration, markup, and common source formats. TextEdit is the
+default; pass another app name or an absolute `.app` path with `--app`:
+
+```shell
+brew install duti
+scripts/set-default-editor.sh --dry-run
+scripts/set-default-editor.sh --app CotEditor
+scripts/set-default-editor.sh --app Zed
+scripts/set-default-editor.sh --app "VS Code"
+scripts/set-default-editor.sh --app "/Applications/CotEditor.app"
+scripts/set-default-editor.sh                  # reset to TextEdit
+scripts/set-default-editor.sh --check
+```
+
+Associations normally follow the document types the selected app declares in
+its `Info.plist` (by UTI or filename extension), so TextEdit only receives its
+native plain-text types. `.el` is an explicit plain-text exception, letting
+CotEditor open Emacs Lisp files. Apps that only register `.ts` by extension are
+skipped for that ambiguous type rather than claiming macOS's MPEG
+transport-stream UTI.
+
+HTML and SVG stay associated with the browser. Extensionless dotfiles such as
+`~/.zshrc` have no filename extension for LaunchServices to match; open them
+directly, for example `open -a CotEditor ~/.zshrc`.
 
 ## Notes
 

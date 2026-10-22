@@ -19,7 +19,7 @@ Single user, single branch (`master`, remote `git@github.com:hbin/dotfiles.git`)
 | `karabiner.json` | Karabiner-Elements remaps (macOS only) | `~/.config/karabiner/karabiner.json` |
 | `ghostty.conf` | Ghostty terminal config | `~/.config/ghostty/config` |
 | `mihomo/` | Clash/mihomo proxy templates | repo-only |
-| `scripts/` | `stow` (linker) and `install.sh` (bootstrap) | repo-only |
+| `scripts/` | `stow` (linker), `install.sh` (bootstrap), and `set-default-editor.sh` (macOS file associations) | repo-only |
 | `AGENTS.md`, `README.md` | agent and user docs | repo-only |
 
 `README.md` holds the user-facing quick start and a path/purpose table; keep it
@@ -114,7 +114,7 @@ exec $SHELL                       # apply shell changes to the current shell
 Syntax/validity checks (there is no test suite):
 
 ```shell
-bash -n scripts/stow scripts/install.sh
+bash -n scripts/stow scripts/install.sh scripts/set-default-editor.sh
 sh -n bin/git-rollback
 zsh -n zshrc zshenv zprofile && bash -n bashrc bash_profile profile alias
 python3 -m json.tool karabiner.json
