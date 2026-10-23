@@ -47,6 +47,7 @@ curl https://mise.run | sh
 | `ghostty.conf` | Ghostty terminal config (symlinked to `~/.config/ghostty/config`) |
 | `karabiner.json` | Karabiner-Elements key remaps (symlinked to `~/.config/karabiner/`; macOS only) |
 | `mihomo/` | Clash/mihomo proxy config templates |
+| `.agents/skills/` | Project-scoped Codex skills; local `.env` files stay untracked |
 | `pryrc` | Pry (Ruby REPL) config |
 | `bin/` | Small helper commands, linked into `~/.local/bin` — see Commands below |
 | `scripts/install.sh` | One-line bootstrap installer (environment + dotfiles) |

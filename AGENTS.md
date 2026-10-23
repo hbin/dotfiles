@@ -19,6 +19,7 @@ Single user, single branch (`master`, remote `git@github.com:hbin/dotfiles.git`)
 | `karabiner.json` | Karabiner-Elements remaps (macOS only) | `~/.config/karabiner/karabiner.json` |
 | `ghostty.conf` | Ghostty terminal config | `~/.config/ghostty/config` |
 | `mihomo/` | Clash/mihomo proxy templates | repo-only |
+| `.agents/skills/` | Project-scoped Codex skills for this repo | repo-only |
 | `scripts/` | `stow` (linker), `install.sh` (bootstrap), and `set-default-editor.sh` (macOS file associations) | repo-only |
 | `AGENTS.md`, `README.md` | agent and user docs | repo-only |
 
@@ -90,11 +91,11 @@ The repo is public.
 - Never commit API keys, tokens, passwords, database URLs, or private keys.
   Machine-local secrets belong in the untracked `~/.bashrc.local` /
   `~/.zshrc.local`.
-- There is **no root `.gitignore` today**; ignore behavior comes from
-  `core.excludesfile = ~/.gitignore_global` (see `gitconfig`). If a file type
-  could hold a credential (`.env`, `*.pem`, …), create a root `.gitignore` with
-  that pattern in the same change that introduces the file type, so it fails
-  safe.
+- The root `.gitignore` is the fail-safe for credential-bearing file types
+  (`.env`, `*.pem`, …); machine ignore patterns also come from
+  `core.excludesfile = ~/.gitignore_global` (see `gitconfig`). Add a pattern to
+  the root `.gitignore` in the same change that introduces a file type that
+  could hold a credential.
 - No owner name/email is tracked: Git identity comes from an untracked
   `~/.gitconfig.local` included by `gitconfig`. Do not add an address back to
   `doom.d/config.el`, `vimrc`, or the snippets.
